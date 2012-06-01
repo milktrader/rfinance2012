@@ -11,7 +11,7 @@ ant = add.indicator(
                     name      = 'SMA', 
                     arguments = list(
                                      x = quote(Cl(mktdata)), 
-                                     n=9 ), 
+                                     n = 9 ), 
                     label     ='sma')
 ant = add.signal(
                     strategy  = ant, 
@@ -46,5 +46,5 @@ ant = add.rule(
                                       orderqty    = 'all', 
                                       orderside   = 'long' ,
                                       ordertype   = 'market' ),
-                    type='exit')
+                    type      = 'exit')
 out = applyStrategy(ant, portfolios='bug')
