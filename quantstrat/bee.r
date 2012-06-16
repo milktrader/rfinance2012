@@ -11,7 +11,7 @@ suppressWarnings(rm("'bug'","'bug'","'GSPC'","bee","initDate","initEq",'start_t'
 currency('USD')
 stock('GSPC',currency='USD',multiplier=1)
 
-initDate='2011-12-31'
+initDate='2011-09-30'
 million = 1e6
 initEq= million
 
@@ -116,7 +116,7 @@ for(i in 'GSPC')
   assign(i, adjustOHLC(get(i),use.Adjusted=TRUE))
 
 start_t<-Sys.time()
-out<-try(applyStrategy(strategy=bee , portfolios='bug'))
+out<-try(applyStrategy(strategy=bee , portfolios='bug', verbose=T))
 end_t<-Sys.time()
 print(end_t-start_t)
 
@@ -130,9 +130,9 @@ print(end_t-start_t)
 
 
 # Process the indicators and generate trades
-out <- try(applyStrategy(strategy=stratFaber, portfolios="faber"))
-updatePortf(Portfolio = "faber",
-Dates=paste('::',as.Date("2012-01-13"),sep=''))
+# out <- try(applyStrategy(strategy=stratFaber, portfolios="faber"))
+# updatePortf(Portfolio = "faber",
+# Dates=paste('::',as.Date("2012-01-13"),sep=''))
 
 
 
