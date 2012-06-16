@@ -25,81 +25,82 @@ bee     = strategy(port)
 
 ############################ INDICATORS ####################################
 
-bee <- add.indicator( strategy = bee, 
-                              name = "BBands", 
-                              arguments = list(HLC=quote(HLC(mktdata)), 
-                                               n=slow, 
-                                               sd=sd))
+bee <- add.indicator( 
+                     strategy  = bee, 
+                     name      = "BBands", 
+                     arguments = list(HLC=quote(HLC(mktdata)), 
+                                      n=slow, 
+                                      sd=sd))
 
 bee <- add.indicator(
-                              strategy = bee, 
-                              name = "SMA", 
-                              arguments = list(x=quote(Cl(mktdata)), 
-                                               n=fast),
-                              label= "fast" )
+                     strategy  = bee, 
+                     name      = "SMA", 
+                     arguments = list(x=quote(Cl(mktdata)), 
+                                      n=fast),
+                     label     = "fast" )
 
 ########################### SIGNALS ######################################
 
 bee <- add.signal(
-                           strategy = bee,
-                           name="sigCrossover",
-                           arguments = list( columns=c('fast',"dn"), 
-                                             relationship="lt"),
-                           label="fast.lt.dn")
+                  strategy  = bee,
+                  name      = "sigCrossover",
+                  arguments = list(columns=c('fast',"dn"), 
+                                   relationship="lt"),
+                  label     = "fast.lt.dn")
 bee <- add.signal(
-                           strategy = bee,
-                           name="sigCrossover",
-                           arguments = list( columns=c("fast","dn"),
-                                             relationship="gt"),
-                           label="fast.gt.up")
+                  strategy  = bee,
+                  name      ="sigCrossover",
+                  arguments = list(columns=c("fast","dn"),
+                                   relationship="gt"),
+                  label     = "fast.gt.up")
 
 ########################## RULES #########################################
 
 bee <- add.rule(
-                         strategy = bee,
-                         name='ruleSignal',
-                         arguments = list(sigcol="fast.gt.up",
-                                          sigval=TRUE,
-                                          orderqty=100,
-                                          ordertype='market',
-                                          orderside='long'),
+                strategy  = bee,
+                name      ='ruleSignal',
+                arguments = list(sigcol    = "fast.gt.up",
+                                 sigval    = TRUE,
+                                 orderqty  = 100,
+                                 ordertype = 'market',
+                                 orderside = 'long'),
 
-                         type='enter',
-                         label='EnterLONG')
-
-bee <- add.rule(
-                         strategy = bee,
-                         name='ruleSignal',
-                         arguments = list(sigcol="fast.lt.dn",
-                                          sigval=TRUE,
-                                          orderqty='all',
-                                          ordertype='market',
-                                          orderside='long'),
-                         type='exit',
-                         label='ExitLONG')
-
+                type      = 'enter',
+                label     = 'EnterLONG')
 
 bee <- add.rule(
-                         strategy = bee,
-                         name='ruleSignal',
-                         arguments = list(sigcol="fast.lt.dn",
-                                          sigval=TRUE,
-                                          orderqty=-100,
-                                          ordertype='market',
-                                          orderside='short'),
-                         type='enter',
-                         label='EnterSHORT')
+                strategy  = bee,
+                name      ='ruleSignal',
+                arguments = list(sigcol    = "fast.lt.dn",
+                                 sigval    = TRUE,
+                                 orderqty  = 'all',
+                                 ordertype = 'market',
+                                 orderside = 'long'),
+                type      ='exit',
+                label     ='ExitLONG')
+
 
 bee <- add.rule(
-                         strategy = bee,
-                         name='ruleSignal',
-                         arguments = list(sigcol="fast.gt.up",
-                                          sigval=TRUE,
-                                          orderqty='all',
-                                          ordertype='market',
-                                          orderside='short'),
-                         type='exit',
-                         label='ExitSHORT')
+                strategy  = bee,
+                name      = 'ruleSignal',
+                arguments = list(sigcol     = "fast.lt.dn",
+                                  sigval    = TRUE,
+                                  orderqty  =  -100,
+                                  ordertype = 'market',
+                                  orderside = 'short'),
+                type      = 'enter',
+                label     = 'EnterSHORT')
+
+bee <- add.rule(
+                strategy  = bee,
+                name      = 'ruleSignal',
+                arguments = list(sigcol     = "fast.gt.up",
+                                 sigval     = TRUE,
+                                 orderqty   = 'all',
+                                 ordertype  = 'market',
+                                 orderside  = 'short'),
+                type      = 'exit',
+                label     = 'ExitSHORT')
 
 #################################### APPLY STRATEGY #######################
 
