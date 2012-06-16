@@ -1,0 +1,52 @@
+\name{setParameterConstraint}
+\alias{setParameterConstraint}
+\title{Function to construct parameter constraint object.}
+\usage{
+  setParameterConstraint(paramConstraintObj = list(),
+    constraintLabel, paramList, relationship)
+}
+\arguments{
+  \item{paramConstraintObj}{the ParameterConstraint object
+  to be updated, if missing, funtion will create a new
+  one.}
+
+  \item{constraintLabel}{string label to apply to the
+  constraint.}
+
+  \item{paramList}{the two name of the prameters as a list
+  contains two strings.}
+
+  \item{relationship}{relationship between the 1st
+  parameter and 2nd one. ('gt' means 1st parameter > 2nd
+  parameter).}
+}
+\value{
+  The returned object is a structure contains the
+  constraints on pairs of parameters, if the input argument
+  'paramConstraintObj' is provided, the function update the
+  input paramConstraintObj object and return the updated
+  one. When specify the constraints of several pairs of
+  parameters, usually the first returned object is passed
+  to the next several call of the function as input
+  argument 'paramConstraintObj'. See example.
+}
+\description{
+  Function to construct parameter constraint object. The
+  returned value will be one of the inputs to the
+  applyParameter function.
+}
+\examples{
+#(For complete demo see parameterTestMACD.R)
+#In a MACD strategy, we want to fast macd calcuated from less time periods (days)
+#than slow macd signal:
+\dontrun{
+x<-setParameterConstraint(constraintLabel='macdPC',
+		paramList=c('nFast','nSlow'),relationship='lt')
+}
+#The object x then can be used as one of the inputs to applyParameter function to specify the
+#constraints between parameters.
+}
+\author{
+  Yu Chen
+}
+

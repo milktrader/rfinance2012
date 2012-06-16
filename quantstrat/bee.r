@@ -1,17 +1,17 @@
-# ok, here's the basics: use addPosLimit to set your max position, with a date = your initDate (before the first trade)
-# [07:36am] braverock: and then, in your entry rules, add osFUN='osMaxPos' to your arguments=list(...)
-# [07:36am] braverock: now, no matter how many 'entry' signals you get, you'll never exceed your max pos
-# 
+#!/usr/bin/Rscript --no-save
+ 
 require(quantstrat)
 
-suppressWarnings(rm("order_book.bug",pos=.strategy))
-suppressWarnings(rm("account.bug","portfolio.bug",pos=.blotter))
-suppressWarnings(rm("'bug'","'bug'","'GSPC'","bee","initDate","initEq",'start_t','end_t'))
+# suppressWarnings(rm("order_book.bug",pos=.strategy))
+# suppressWarnings(rm("account.bug","portfolio.bug",pos=.blotter))
+# suppressWarnings(rm("'bug'","'bug'","'GSPC'","bee","initDate","initEq",'start_t','end_t'))
+
+getSymbols('^GSPC') 
 
 currency('USD')
 stock('GSPC',currency='USD',multiplier=1)
 
-initDate='2011-09-30'
+initDate='2010-09-30'
 million = 1e6
 initEq= million
 
@@ -23,11 +23,11 @@ initPortf('bug',symbols='GSPC', initDate=initDate)
 initAcct('bug',portfolios='bug', initDate=initDate)
 initOrders(portfolio='bug',initDate=initDate)
 
-addPosLimit(
-            portfolio='bug',
-            symbol='GSPC', 
-            timestamp = initDate,  
-            maxpos=100)
+#addPosLimit(
+#            portfolio='bug',
+#            symbol='GSPC', 
+#            timestamp = initDate,  
+#            maxpos=100)
 
 
 bee <- strategy('bug')
@@ -83,8 +83,7 @@ bee <- add.rule(
                                           sigval=TRUE, 
                                           orderqty=100, 
                                           ordertype='market', 
-                                          orderside='long',
-                                          osFUN='osMaxPos'),
+                                          orderside='long'),
                          label='EnterLONG',
                          type='enter')
 bee <- add.rule(
@@ -104,38 +103,39 @@ bee <- add.rule(
                                           sigval=TRUE, 
                                           orderqty=-100, 
                                           ordertype='market', 
-                                          orderside='short',
-                                          osFUN='osMaxPos'),
+                                          orderside='short'),
                          label='EnterSHORT',
                          type='enter')
  
 ####################################### AFTER RULES ###############################
 
-getSymbols('^GSPC',from=initDate)
-for(i in 'GSPC')
-  assign(i, adjustOHLC(get(i),use.Adjusted=TRUE))
+applyStrategy(bee, 'bug', prefer='Open', verbose = FALSE)
 
-start_t<-Sys.time()
-out<-try(applyStrategy(strategy=bee , portfolios='bug', verbose=T))
-end_t<-Sys.time()
-print(end_t-start_t)
+print(getOrderBook('bug'))
 
-start_t<-Sys.time()
-updatePortf(Portfolio='bug',Dates=paste('::',as.Date(Sys.time()),sep=''))
-end_t<-Sys.time()
-print("trade blotter portfolio update:")
-print(end_t-start_t)
-
-
+txns <- getTxns('bug', 'GSPC')
+txns
+cat('Net profit:', sum(txns$Net.Txn.Realized.PL), '\n')
+# getSymbols('^GSPC',from=initDate)
+# for(i in 'GSPC')
+#   assign(i, adjustOHLC(get(i),use.Adjusted=TRUE))
+# 
+# start_t<-Sys.time()
+# out<-try(applyStrategy(strategy=bee , portfolios='bug', verbose=T))
+# end_t<-Sys.time()
+# print(end_t-start_t)
+# 
+# start_t<-Sys.time()
+# updatePortf(Portfolio='bug',Dates=paste('::',as.Date(Sys.time()),sep=''))
+# end_t<-Sys.time()
+# print("trade blotter portfolio update:")
+# print(end_t-start_t)
 
 
 # Process the indicators and generate trades
 # out <- try(applyStrategy(strategy=stratFaber, portfolios="faber"))
 # updatePortf(Portfolio = "faber",
 # Dates=paste('::',as.Date("2012-01-13"),sep=''))
-
-
-
 
 
 # # Evaluate results
@@ -146,10 +146,10 @@ print(end_t-start_t)
 
 
 
-themelist = chart_theme()
-themelist$col$up.col = 'lightblue'
-themelist$col$dn.col = 'lightpink'
-
-
-chart.Posn(Portfolio='bug',Symbol='GSPC', theme=themelist)
+# themelist = chart_theme()
+# themelist$col$up.col = 'lightblue'
+# themelist$col$dn.col = 'lightpink'
+# 
+# 
+# chart.Posn(Portfolio='bug',Symbol='GSPC', theme=themelist)
 

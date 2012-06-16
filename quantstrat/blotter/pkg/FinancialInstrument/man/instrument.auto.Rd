@@ -1,0 +1,104 @@
+\name{instrument.auto}
+\alias{instrument.auto}
+\title{Create an instrument based on name alone}
+\usage{
+  instrument.auto(primary_id, currency = NULL,
+    multiplier = 1, silent = FALSE,
+    default_type = "unknown", root = NULL, assign_i = TRUE,
+    ...)
+}
+\arguments{
+  \item{primary_id}{charater primary identifier of
+  instrument to be created}
+
+  \item{currency}{character name of currency that
+  instrument will be denominated it. Default=\dQuote{USD}}
+
+  \item{multiplier}{numeric product multiplier}
+
+  \item{silent}{TRUE/FALSE. silence warnings?}
+
+  \item{default_type}{What type of instrument to make if it
+  is not clear from the primary_id. ("stock", "future",
+  etc.) Default is NULL.}
+
+  \item{root}{character string to pass to
+  \code{\link{parse_id}} to be used as the root_id for
+  easier/more accurate parsing.}
+
+  \item{assign_i}{TRUE/FALSE. Should the \code{instrument}
+  be assigned in the \code{.instrument} environment?}
+
+  \item{...}{other passthrough parameters}
+}
+\value{
+  Primarily called for its side-effect, but will return the
+  name of the instrument that was created
+}
+\description{
+  Given a name, this function will attempt to create an
+  instrument of the appropriate type.
+}
+\details{
+  If \code{currency} is not already defined, it will be
+  defined (unless it is not 3 uppercase characters). The
+  default value for \code{currency} is \dQuote{USD}.  If
+  you do not provide a value for \code{currency},
+  \dQuote{USD} will be defined and used to create the
+  instrument.
+
+  If \code{primary_id} is 6 uppercase letters and
+  \code{default_type} is not provided, it will be assumed
+  that it is the primary_id of an
+  \code{\link{exchange_rate}}, in which case, the 1st and
+  2nd half of \code{primary_id} will be defined as
+  \code{\link{currency}}s if not the names of already
+  defined \code{\link{instrument}}s. If the
+  \code{primary_id} begins with a \dQuote{^} it will be
+  assumed that it is a yahoo symbol and that the instrument
+  is an index (synthetic), and the \sQuote{src} will be set
+  to \dQuote{yahoo}. (see \code{\link{setSymbolLookup}})
+
+  If it is not clear from the \code{primary_id} what type
+  of instrument to create, an instrument of type
+  \code{default_type} will be created (which is 'NULL' by
+  default). This will happen when \code{primary_id} is that
+  of a \code{\link{stock}} \code{\link{future}}
+  \code{\link{option}} or \code{\link{bond}}.  This may
+  also happen if \code{primary_id} is that of a
+  \code{\link{future_series}} or
+  \code{\link{option_series}} but the corresponding
+  \code{future} or \code{option} cannot be found.  In this
+  case, the instrument type would be \code{default_type},
+  but a lot of things would be filled in as if it were a
+  valid series instrument (e.g. \sQuote{expires},
+  \sQuote{strike}, \sQuote{suffix_id}, etc.)
+}
+\note{
+  This is not intended to be used to create instruments of
+  type \code{stock}, \code{future}, \code{option}, or
+  \code{bond} although it may be updated in the future.
+}
+\examples{
+\dontrun{
+instrument.auto("CL_H1.U1")
+getInstrument("CL_H1.U1") #guaranteed_spread
+
+instrument.auto("ES_H1.YM_H1")
+getInstrument("ES_H1.YM_H1") #synthetic
+
+currency(c("USD","EUR"))
+instrument.auto("EURUSD")
+getInstrument("EURUSD") #made an exchange_rate
+
+instrument.auto("VX_H11") #no root future defined yet!
+getInstrument("VX_H11") #couldn't find future, didnt make future_series
+future("VX","USD",1000,underlying_id=synthetic("SPX","USD")) #make the root
+instrument.auto("VX_H11") #and try again
+getInstrument("VX_H11") #made a future_series
+}
+}
+\author{
+  Garrett See
+}
+

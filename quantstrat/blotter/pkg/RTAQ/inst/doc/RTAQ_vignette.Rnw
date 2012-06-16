@@ -1,0 +1,4 @@
+%\VignetteIndexEntry{RTAQ_vignette}
+\documentclass{article}
+\begin{document}
+\end{document}

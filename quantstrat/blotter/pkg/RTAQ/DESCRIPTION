@@ -1,0 +1,11 @@
+Package: RTAQ
+Type: Package
+Title: RTAQ: Tools for the analysis of trades and quotes in R
+Version: 0.3
+Author: Jonathan Cornelissen, Kris Boudt
+Maintainer: Jonathan Cornelissen <Jonathan.cornelissen@econ.kuleuven.be>
+Description: The Trades and Quotes data of the New York Stock Exchange is a popular input for the implementation of intraday trading strategies, the measurement of liquidity and volatility and investigation of the market microstructure, among others. This package contains a collection of R functions to carefully clean and match the trades and quotes data, calculate ex post liquidity and volatility measures and detect price jumps in the data.
+Depends: xts, timeDate
+Suggests: realized, robustbase, cubature, mvtnorm, chron
+License: GPL-2
+LazyLoad: yes

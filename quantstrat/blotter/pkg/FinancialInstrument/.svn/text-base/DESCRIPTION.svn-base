@@ -1,0 +1,51 @@
+Copyright: (c) 2004 - 2012
+Package: FinancialInstrument
+Maintainer: Garrett See <gsee000@gmail.com>
+License: GPL
+Title: Financial Instrument Model Infrastructure for R
+Type: Package
+LazyLoad: yes
+Author: Peter Carl, Dirk Eddelbuettel, Jeffrey Ryan, Joshua
+    Ulrich, Brian G. Peterson, Garrett See
+Description: Infrastructure for defining instruments
+    meta-data and relationships. Provides support for
+    multi-asset class and multi-currency portfolios. Still
+    in heavy development.
+Version: 0.14.7
+URL: https://r-forge.r-project.org/projects/blotter/
+Date: $Date$
+Depends:
+    R (>= 2.12.0),
+    quantmod(>= 0.3-17),
+    zoo(>= 1.7-5)
+Suggests:
+    foreach
+Collate:
+    'buildHierarchy.R'
+    'buildSpread.R'
+    'build_symbols.R'
+    'instrument.R'
+    'instrument.table.R'
+    'load.instruments.R'
+    'redenominate.R'
+    'splice.R'
+    'splooth.R'
+    'synthetic.R'
+    'volep.R'
+    'parse_id.R'
+    'MonthCodes.R'
+    'format_id.R'
+    'ls_by_expiry.R'
+    'ls_instruments_by.R'
+    'ls_instruments.R'
+    'ls_strikes.R'
+    'ls_underlyings.R'
+    'update_instruments.yahoo.R'
+    'ls_by_currency.R'
+    'saveInstruments.R'
+    'ls_expiries.R'
+    'saveSymbols.R'
+    'Tick2Sec.R'
+    'all.equal.instrument.R'
+    'expires.R'
+    'find.instrument.R'

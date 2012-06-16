@@ -1,0 +1,76 @@
+useDynLib(RTAQ, .registration = TRUE);
+#export(anova.trls, anovalist.trls, correlogram, expcov, gaucov, Kaver,
+#       Kenvl, Kfn, plot.trls, ppgetregion, ppinit, pplik, ppregion,
+#       predict.trls, prmat, Psim, semat, sphercov, SSI, Strauss,
+#       surf.gls, surf.ls, trls.influence, trmat, variogram)
+
+export(
+#cleaning
+harModel,
+autoSelectExchangeQuotes, 
+autoSelectExchangeTrades, 
+exchangeHoursOnly,
+mergeQuotesSameTimestamp, 
+mergeTradesSameTimestamp,
+noZeroPrices,
+noZeroQuotes,
+quotesCleanup,
+rmLargeSpread,
+rmNegativeSpread,
+rmOutliers,
+rmTradeOutliers,
+salesCondition,
+selectExchange, 
+tradesCleanup, 
+tradesCleanupFinal, 
+#Topic data manipulation
+aggregatePrice,
+aggregateQuotes,
+aggregateTrades,
+aggregatets,
+matchTradesQuotes,
+TAQLoad,
+refreshTime,
+#Topic datasets
+#sample_5minprices,
+#sample_5minprices_jumps,
+#sample_qdata, 
+#sample_qdataraw,
+#sample_tdata,
+#sample_tdataraw,
+#Topic liquidity
+getTradeDirection, 
+tqLiquidity,
+#Topic volatility
+MedRV, 
+MinRV,
+RBPCov,
+RCov,
+ROWCov,
+thresholdCov,
+TSCov,
+RTSCov,
+makePsd,
+#misc
+convert,
+makeReturns,
+#to be adjusted :
+#liquidity :
+#es, rs, value_trade, signed_value_trade,  
+#di_diff, di_div, pes, prs, price_impact, prop_price_impact,  
+#tspread, pts, p_return_sqr, p_return_abs, qs, pqs,  
+#logqs, logsize, qslope, logqslope, mq_return_sqr, mq_return_abs,
+#rest :
+spotVol,
+sumN,                       #previously included...
+previoustick,               #idem
+medianN                     #idem
+#waverage,                    #new 
+#maxvol                       #new
+)
+
+S3method(print, harModel);
+S3method(summary, harModel);
+S3method(plot, harModel);
+
+
