@@ -12,8 +12,6 @@ currency('USD')
 stock('GSPC',currency='USD',multiplier=1)
 
 initDate='2011-12-31'
-
-foo = as.Date(initDate)
 million = 1e6
 initEq= million
 
@@ -28,11 +26,13 @@ initOrders(portfolio='bug',initDate=initDate)
 addPosLimit(
             portfolio='bug',
             symbol='GSPC', 
-            timestamp = as.character(foo - 1),  
-            maxpos=200)
+            timestamp = initDate,  
+            maxpos=100)
 
 
 bee <- strategy('bug')
+
+################################ INDICATORS ##########################
 
 bee <- add.indicator(
                               strategy = bee, 
@@ -47,6 +47,9 @@ bee <- add.indicator(
                               arguments = list(x=quote(Cl(mktdata)), 
                                                n=FAST),
                               label= "fast" )
+
+################################### SIGNALS ############################
+
 bee <- add.signal(
                            strategy = bee,
                            name="sigCrossover",
@@ -60,6 +63,19 @@ bee <- add.signal(
                                             relationship="gt"),
                            label="fast.gt.up")
 
+################################### RULES ################################
+
+bee <- add.rule(
+                         strategy = bee,
+                         name='ruleSignal', 
+                         arguments = list(sigcol="fast.lt.dn",
+                                          sigval=TRUE, 
+                                          orderqty='all', 
+                                          ordertype='market', 
+                                          orderside='long'),
+                         label='ExitLONG',
+                         type='exit')
+
 bee <- add.rule(
                          strategy = bee,
                          name='ruleSignal', 
@@ -69,8 +85,18 @@ bee <- add.rule(
                                           ordertype='market', 
                                           orderside='long',
                                           osFUN='osMaxPos'),
-
+                         label='EnterLONG',
                          type='enter')
+bee <- add.rule(
+                         strategy = bee,
+                         name='ruleSignal', 
+                         arguments = list(sigcol="fast.gt.up",
+                                          sigval=TRUE, 
+                                          orderqty='all', 
+                                          ordertype='market', 
+                                          orderside='short'),
+                         label='ExitSHORT',
+                         type='exit')
 bee <- add.rule(
                          strategy = bee,
                          name='ruleSignal', 
@@ -80,27 +106,11 @@ bee <- add.rule(
                                           ordertype='market', 
                                           orderside='short',
                                           osFUN='osMaxPos'),
+                         label='EnterSHORT',
                          type='enter')
-bee <- add.rule(
-                         strategy = bee,
-                         name='ruleSignal', 
-                         arguments = list(sigcol="fast.lt.dn",
-                                          sigval=TRUE, 
-                                          orderqty='all', 
-                                          ordertype='market', 
-                                          orderside='long'),
-                         type='exit')
-
-bee <- add.rule(
-                         strategy = bee,
-                         name='ruleSignal', 
-                         arguments = list(sigcol="fast.gt.up",
-                                          sigval=TRUE, 
-                                          orderqty='all', 
-                                          ordertype='market', 
-                                          orderside='short'),
-                         type='exit')
  
+####################################### AFTER RULES ###############################
+
 getSymbols('^GSPC',from=initDate)
 for(i in 'GSPC')
   assign(i, adjustOHLC(get(i),use.Adjusted=TRUE))
@@ -117,26 +127,29 @@ print("trade blotter portfolio update:")
 print(end_t-start_t)
 
 
-chart_theme <- mytheme <- function() {
-  theme <-list(col=list(bg='ivory',
-                        label.bg='ivory',
-                        grid='ivory',
-                        grid2='ivory',
-                        ticks=1,
-                        labels=4,
-                        line.col='ivory',
-                        dn.col='lightcyan',
-                        up.col='lightcyan',
-                        dn.border='lightblue',
-                        up.border='lightblue'),
-               shading=1,
-               format.labels=TRUE,
-               coarse.time=FALSE,
-               rylab=FALSE,
-               lylab=TRUE,
-               grid.ticks.lwd=1)
-  theme
-}
 
-chart.Posn(Portfolio='bug',Symbol='GSPC', theme=chart_theme(), clev=0)
+
+# Process the indicators and generate trades
+out <- try(applyStrategy(strategy=stratFaber, portfolios="faber"))
+updatePortf(Portfolio = "faber",
+Dates=paste('::',as.Date("2012-01-13"),sep=''))
+
+
+
+
+
+# # Evaluate results
+# portRet <- PortfReturns("bug")
+# portRet$Total <- rowSums(portRet, na.rm=TRUE)
+# charts.PerformanceSummary(portRet$Total)
+# tradeStats("bug")[,c("Symbol","Num.Trades","Net.Trading.PL","maxDrawdown")]
+
+
+
+themelist = chart_theme()
+themelist$col$up.col = 'lightblue'
+themelist$col$dn.col = 'lightpink'
+
+
+chart.Posn(Portfolio='bug',Symbol='GSPC', theme=themelist)
 
