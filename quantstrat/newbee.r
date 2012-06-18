@@ -1,5 +1,3 @@
-#!/usr/bin/Rscript --no-save
-
 ############################# DEFINE VARIABLES ##############################
 
 sym      = 'SPY'
@@ -48,6 +46,7 @@ bee <- add.signal(
                   arguments = list(columns=c('fast','dn'), 
                                    relationship='lt'),
                   label     = 'fast.lt.dn')
+
 bee <- add.signal(
                   strategy  = bee,
                   name      = 'sigCrossover',
@@ -74,7 +73,7 @@ bee <- add.rule(
                 name      = 'ruleSignal',
                 arguments = list(sigcol    = 'fast.lt.dn',
                                  sigval    = TRUE,
-                                 orderqty  = 'all',
+                                 orderqty  = -100,
                                  ordertype = 'market',
                                  orderside = 'long'),
                 type      = 'exit',
@@ -97,7 +96,7 @@ bee <- add.rule(
                 name      = 'ruleSignal',
                 arguments = list(sigcol     = 'fast.gt.up',
                                  sigval     = TRUE,
-                                 orderqty   = 'all',
+                                 orderqty   = 100,
                                  ordertype  = 'market',
                                  orderside  = 'short'),
                 type      = 'exit',
@@ -105,13 +104,11 @@ bee <- add.rule(
 
 #################################### APPLY STRATEGY #######################
 
-applyStrategy(bee, port, prefer='Open', verbose = FALSE)
+applyStrategy(bee, port )
 
 #################################### TABLES ###############################
 print(getOrderBook(port))
 
-txns <- getTxns(port, sym)
-txns
 cat('Net profit:', sum(txns$Net.Txn.Realized.PL), '\n')
 cat('Sharpe Ratio:', sum(txns$Net.Txn.Realized.PL), '\n')
 
@@ -121,6 +118,5 @@ cat('Sharpe Ratio:', sum(txns$Net.Txn.Realized.PL), '\n')
 # themelist            = chart_theme()
 # themelist$col$up.col = 'lightblue'
 # themelist$col$dn.col = 'lightpink'
-# 
 # 
 # chart.Posn(Portfolio=port, Symbol=sym, theme=themelist)
