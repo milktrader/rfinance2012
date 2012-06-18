@@ -107,10 +107,8 @@ bee <- add.rule(
 applyStrategy(bee, port )
 
 #################################### TABLES ###############################
-print(getOrderBook(port))
 
-cat('Net profit:', sum(txns$Net.Txn.Realized.PL), '\n')
-cat('Sharpe Ratio:', sum(txns$Net.Txn.Realized.PL), '\n')
+print(getOrderBook(port))
 
 
 ################################## PLOTS ###################################
