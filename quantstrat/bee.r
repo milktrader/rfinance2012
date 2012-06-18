@@ -4,7 +4,6 @@ sym      = 'SPY'
 port     = 'bug'
 acct     = 'spray'
 currency = 'USD'
-initDate = '1949-12-31'
 initEq   = 100000
 fast     = 10
 slow     = 30
@@ -17,9 +16,9 @@ getSymbols(sym)
 
 ############################ INITIALIZE #####################################
 
-initPortf(port, symbols=sym, initDate=initDate, currency=currency)
-initAcct(acct, portfolios=port, initDate=initDate, currency=currency)
-initOrders(port, initDate=initDate)
+initPortf(port, symbols=sym, currency=currency)
+initAcct(acct, portfolios=port, currency=currency)
+initOrders(port )
 bee     = strategy(port)
 
 ############################ INDICATORS ####################################
