@@ -1,103 +1,120 @@
- 
+############################# DEFINE VARIABLES ##############################
+
+sym      = 'SPY'
+port     = 'bug'
+acct     = 'spray'
+currency = 'USD'
+initDate = '1949-12-31'
+initEq   = 100000
+fast     = 10
+slow     = 30
+sd       = 0.5
+
+############################### GET DATA ####################################
+
 require(quantstrat)
-getSymbols('^GSPC') 
+getSymbols(sym)
 
+############################ INITIALIZE #####################################
 
-initDate='2011-09-30'
-initEq= 1e6
+initPortf(port, symbols=sym, initDate=initDate, currency=currency)
+initAcct(acct, portfolios=port, initDate=initDate, currency=currency)
+initOrders(port, initDate=initDate)
+bee     = strategy(port)
 
-SD = .5
-SLOW = 30
-FAST = 10
+############################ INDICATORS ####################################
 
-currency('USD')
-stock('GSPC',currency='USD',multiplier=1)
-initPortf('bug',symbols='GSPC', initDate=initDate)
-initAcct('bug',portfolios='bug', initDate=initDate)
-initOrders(portfolio='bug',initDate=initDate)
-
-
-bee <- strategy('bug')
-
-################################ INDICATORS ##########################
+bee <- add.indicator( 
+                     strategy  = bee, 
+                     name      = 'BBands', 
+                     arguments = list(HLC=quote(HLC(mktdata)), 
+                                      n=slow, 
+                                      sd=sd))
 
 bee <- add.indicator(
-                              strategy = bee, 
-                              name = "BBands", 
-                              arguments = list(HLC=quote(HLC(mktdata)), 
-                                               n=SLOW, 
-                                               sd=SD))
+                     strategy  = bee, 
+                     name      = 'SMA', 
+                     arguments = list(x=quote(Cl(mktdata)), 
+                                      n=fast),
+                     label     = 'fast' )
 
-bee <- add.indicator(
-                              strategy = bee, 
-                              name = "SMA", 
-                              arguments = list(x=quote(Cl(mktdata)), 
-                                               n=FAST),
-                              label= "fast" )
-
-################################### SIGNALS ############################
+########################### SIGNALS ######################################
 
 bee <- add.signal(
-                           strategy = bee,
-                           name="sigCrossover",
-                           arguments = list( columns=c('fast',"dn"), 
-                                             relationship="lt"),
-                           label="fast.lt.dn")
+                  strategy  = bee,
+                  name      = 'sigCrossover',
+                  arguments = list(columns=c('fast','dn'), 
+                                   relationship='lt'),
+                  label     = 'fast.lt.dn')
+
 bee <- add.signal(
-                           strategy = bee,
-                           name="sigCrossover",
-                           arguments = list( columns=c("fast","up"),
-                                             relationship="gt"),
-                           label="fast.gt.up")
+                  strategy  = bee,
+                  name      = 'sigCrossover',
+                  arguments = list(columns=c('fast','up'),
+                                   relationship='gt'),
+                  label     = 'fast.gt.up')
 
-################################### RULES ################################
-
-bee <- add.rule(
-                         strategy = bee,
-                         name='ruleSignal', 
-                         arguments = list(sigcol="fast.gt.up",
-                                          sigval=TRUE, 
-                                          orderqty=100, 
-                                          ordertype='market', 
-                                          orderside='long'),
-                         label='EnterLONG',
-                         type='enter')
-bee <- add.rule(
-                         strategy = bee,
-                         name='ruleSignal', 
-                         arguments = list(sigcol="fast.lt.dn",
-                                          sigval=TRUE, 
-                                          orderqty='all', 
-                                          ordertype='market', 
-                                          orderside='long'),
-                         label='ExitLONG',
-                         type='exit')
+########################## RULES #########################################
 
 bee <- add.rule(
-                         strategy = bee,
-                         name='ruleSignal', 
-                         arguments = list(sigcol="fast.lt.dn",
-                                          sigval=TRUE, 
-                                          orderqty=-100, 
-                                          ordertype='market', 
-                                          orderside='short'),
-                         label='EnterSHORT',
-                         type='enter')
+                strategy  = bee,
+                name      = 'ruleSignal',
+                arguments = list(sigcol    = 'fast.gt.up',
+                                 sigval    = TRUE,
+                                 orderqty  = 100,
+                                 ordertype = 'market',
+                                 orderside = 'long'),
+
+                type      = 'enter',
+                label     = 'EnterLONG')
+
 bee <- add.rule(
-                         strategy = bee,
-                         name='ruleSignal', 
-                         arguments = list(sigcol="fast.gt.up",
-                                          sigval=TRUE, 
-                                          orderqty='all', 
-                                          ordertype='market', 
-                                          orderside='short'),
-                         label='ExitSHORT',
-                         type='exit')
- 
-####################################### AFTER RULES ###############################
+                strategy  = bee,
+                name      = 'ruleSignal',
+                arguments = list(sigcol    = 'fast.lt.dn',
+                                 sigval    = TRUE,
+                                 orderqty  = -100,
+                                 ordertype = 'market',
+                                 orderside = 'long'),
+                type      = 'exit',
+                label     = 'ExitLONG')
 
-applyStrategy(bee, 'bug', prefer='Open', verbose = FALSE)
 
-print(getOrderBook('bug'))
+bee <- add.rule(
+                strategy  = bee,
+                name      = 'ruleSignal',
+                arguments = list(sigcol     = 'fast.lt.dn',
+                                  sigval    = TRUE,
+                                  orderqty  =  -100,
+                                  ordertype = 'market',
+                                  orderside = 'short'),
+                type      = 'enter',
+                label     = 'EnterSHORT')
 
-cat('Net profit:', sum(txns$Net.Txn.Realized.PL), '\n')
+bee <- add.rule(
+                strategy  = bee,
+                name      = 'ruleSignal',
+                arguments = list(sigcol     = 'fast.gt.up',
+                                 sigval     = TRUE,
+                                 orderqty   = 100,
+                                 ordertype  = 'market',
+                                 orderside  = 'short'),
+                type      = 'exit',
+                label     = 'ExitSHORT')
+
+#################################### APPLY STRATEGY #######################
+
+applyStrategy(bee, port )
+
+#################################### TABLES ###############################
+
+print(getOrderBook(port))
+
+
+################################## PLOTS ###################################
+
+# themelist            = chart_theme()
+# themelist$col$up.col = 'lightblue'
+# themelist$col$dn.col = 'lightpink'
+# 
+# chart.Posn(Portfolio=port, Symbol=sym, theme=themelist)
