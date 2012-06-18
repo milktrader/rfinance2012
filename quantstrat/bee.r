@@ -1,33 +1,21 @@
 #!/usr/bin/Rscript --no-save
  
 require(quantstrat)
-
-# suppressWarnings(rm("order_book.bug",pos=.strategy))
-# suppressWarnings(rm("account.bug","portfolio.bug",pos=.blotter))
-# suppressWarnings(rm("'bug'","'bug'","'GSPC'","bee","initDate","initEq",'start_t','end_t'))
-
 getSymbols('^GSPC') 
 
-currency('USD')
-stock('GSPC',currency='USD',multiplier=1)
 
-initDate='2010-09-30'
-million = 1e6
-initEq= million
+initDate='2011-09-30'
+initEq= 1e6
 
 SD = .5
 SLOW = 30
 FAST = 10
 
+currency('USD')
+stock('GSPC',currency='USD',multiplier=1)
 initPortf('bug',symbols='GSPC', initDate=initDate)
 initAcct('bug',portfolios='bug', initDate=initDate)
 initOrders(portfolio='bug',initDate=initDate)
-
-#addPosLimit(
-#            portfolio='bug',
-#            symbol='GSPC', 
-#            timestamp = initDate,  
-#            maxpos=100)
 
 
 bee <- strategy('bug')
@@ -59,22 +47,11 @@ bee <- add.signal(
 bee <- add.signal(
                            strategy = bee,
                            name="sigCrossover",
-                           arguments = list( columns=c("fast","dn"),
+                           arguments = list( columns=c("fast","up"),
                                             relationship="gt"),
                            label="fast.gt.up")
 
 ################################### RULES ################################
-
-bee <- add.rule(
-                         strategy = bee,
-                         name='ruleSignal', 
-                         arguments = list(sigcol="fast.lt.dn",
-                                          sigval=TRUE, 
-                                          orderqty='all', 
-                                          ordertype='market', 
-                                          orderside='long'),
-                         label='ExitLONG',
-                         type='exit')
 
 bee <- add.rule(
                          strategy = bee,
@@ -89,13 +66,14 @@ bee <- add.rule(
 bee <- add.rule(
                          strategy = bee,
                          name='ruleSignal', 
-                         arguments = list(sigcol="fast.gt.up",
+                         arguments = list(sigcol="fast.lt.dn",
                                           sigval=TRUE, 
                                           orderqty='all', 
                                           ordertype='market', 
-                                          orderside='short'),
-                         label='ExitSHORT',
+                                          orderside='long'),
+                         label='ExitLONG',
                          type='exit')
+
 bee <- add.rule(
                          strategy = bee,
                          name='ruleSignal', 
@@ -106,12 +84,22 @@ bee <- add.rule(
                                           orderside='short'),
                          label='EnterSHORT',
                          type='enter')
+bee <- add.rule(
+                         strategy = bee,
+                         name='ruleSignal', 
+                         arguments = list(sigcol="fast.gt.up",
+                                          sigval=TRUE, 
+                                          orderqty='all', 
+                                          ordertype='market', 
+                                          orderside='short'),
+                         label='ExitSHORT',
+                         type='exit')
  
 ####################################### AFTER RULES ###############################
 
 applyStrategy(bee, 'bug', prefer='Open', verbose = FALSE)
 
-print(getOrderBook('bug'))
+#print(getOrderBook('bug'))
 
 txns <- getTxns('bug', 'GSPC')
 txns

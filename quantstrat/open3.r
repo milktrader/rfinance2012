@@ -1,4 +1,6 @@
-####!/usr/bin/Rscript --no-save
+
+
+#!/usr/bin/Rscript --no-save
 
 initDate = '2002-10-21'
 .from='2010-01-01'
@@ -41,18 +43,6 @@ bee <- add.signal(bee, 'sigCrossover', arguments = list(columns=c("SmaFAST","Sma
 bee <- add.rule(
                          strategy = bee,
                          name='ruleSignal',
-                         arguments = list(sigcol="fast.gt.up",
-                                          sigval=TRUE,
-                                          orderqty=100,
-                                          ordertype='market',
-                                          orderside='long'),
-
-                         type='enter',
-                         label='EnterLONG')
-
-bee <- add.rule(
-                         strategy = bee,
-                         name='ruleSignal',
                          arguments = list(sigcol="fast.lt.dn",
                                           sigval=TRUE,
                                           orderqty='all',
@@ -61,7 +51,16 @@ bee <- add.rule(
                          type='exit',
                          label='ExitLONG')
 
-
+bee <- add.rule(
+                         strategy = bee,
+                         name='ruleSignal',
+                         arguments = list(sigcol="fast.gt.up",
+                                          sigval=TRUE,
+                                          orderqty='all',
+                                          ordertype='market',
+                                          orderside='short'),
+                         type='exit',
+                         label='ExitSHORT')
 bee <- add.rule(
                          strategy = bee,
                          name='ruleSignal',
@@ -78,12 +77,12 @@ bee <- add.rule(
                          name='ruleSignal',
                          arguments = list(sigcol="fast.gt.up",
                                           sigval=TRUE,
-                                          orderqty='all',
+                                          orderqty=100,
                                           ordertype='market',
-                                          orderside='short'),
-                         type='exit',
-                         label='ExitSHORT')
+                                          orderside='long'),
 
+                         type='enter',
+                         label='EnterLONG')
 #
 
 applyStrategy(bee, p, prefer='Open', verbose = FALSE)

@@ -1,4 +1,5 @@
-####!/usr/bin/Rscript --no-save
+
+#!/usr/bin/Rscript --no-save
 
 initDate = '2002-10-21'
 .from='2010-01-01'
@@ -33,15 +34,24 @@ bee <- add.indicator(bee, name="SMA", arguments = list(x = quote(Cl(mktdata)), n
 
 # signals
 
-bee <- add.signal(bee, 'sigCrossover', arguments = list(columns=c("SmaFAST","SmaSLOW"), relationship="gte"), label='fast.gt.up')
-bee <- add.signal(bee, 'sigCrossover', arguments = list(columns=c("SmaFAST","SmaSLOW"), relationship="lt"), label='fast.lt.dn')
+######### Long and Short rules do not share signals nicely so they get their own rooms to play in. #########
+
+################ LONG SIGNALS #######################
+
+bee <- add.signal(bee, 'sigCrossover', arguments = list(columns=c("SmaFAST","SmaSLOW"), relationship="gte"), label='fast.gt.up.long')
+bee <- add.signal(bee, 'sigCrossover', arguments = list(columns=c("SmaFAST","SmaSLOW"), relationship="lt"), label='fast.lt.dn.long')
+
+############### SHORT SIGNALS #######################
+
+bee <- add.signal(bee, 'sigCrossover', arguments = list(columns=c("SmaFAST","SmaSLOW"), relationship="gte"), label='fast.gt.up.short')
+bee <- add.signal(bee, 'sigCrossover', arguments = list(columns=c("SmaFAST","SmaSLOW"), relationship="lt"), label='fast.lt.dn.short')
 
 # rules
 
 bee <- add.rule(
                          strategy = bee,
                          name='ruleSignal',
-                         arguments = list(sigcol="fast.gt.up",
+                         arguments = list(sigcol="fast.gt.up.long",
                                           sigval=TRUE,
                                           orderqty=100,
                                           ordertype='market',
@@ -49,11 +59,10 @@ bee <- add.rule(
 
                          type='enter',
                          label='EnterLONG')
-
 bee <- add.rule(
                          strategy = bee,
                          name='ruleSignal',
-                         arguments = list(sigcol="fast.lt.dn",
+                         arguments = list(sigcol="fast.lt.dn.long",
                                           sigval=TRUE,
                                           orderqty='all',
                                           ordertype='market',
@@ -61,11 +70,10 @@ bee <- add.rule(
                          type='exit',
                          label='ExitLONG')
 
-
 bee <- add.rule(
                          strategy = bee,
                          name='ruleSignal',
-                         arguments = list(sigcol="fast.lt.dn",
+                         arguments = list(sigcol="fast.lt.dn.short",
                                           sigval=TRUE,
                                           orderqty=-100,
                                           ordertype='market',
@@ -76,14 +84,13 @@ bee <- add.rule(
 bee <- add.rule(
                          strategy = bee,
                          name='ruleSignal',
-                         arguments = list(sigcol="fast.gt.up",
+                         arguments = list(sigcol="fast.gt.up.short",
                                           sigval=TRUE,
                                           orderqty='all',
                                           ordertype='market',
                                           orderside='short'),
                          type='exit',
                          label='ExitSHORT')
-
 #
 
 applyStrategy(bee, p, prefer='Open', verbose = FALSE)
