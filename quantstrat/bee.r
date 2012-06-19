@@ -117,3 +117,11 @@ print(getOrderBook(port))
 # themelist$col$dn.col = 'lightpink'
 # 
 # chart.Posn(Portfolio=port, Symbol=sym, theme=themelist)
+
+
+################################# TESTING ###############################
+
+
+# head(.strategy$order_book.bug$bug$SPY[,c(1,4,11)])
+
+
