@@ -1,3 +1,6 @@
+#!/usr/bin/Rscript --no-save
+
+
 ############################# DEFINE VARIABLES ##############################
 
 sym      = 'SPY'
