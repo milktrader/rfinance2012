@@ -111,7 +111,7 @@ bee <- add.rule(
 
 #################################### APPLY STRATEGY #######################
 
-suppressMessages(applyStrategy(bee, port, verbose=FALSE))
+suppressWarnings(applyStrategy(bee, port, verbose=FALSE))
 
 #################################### TABLES ###############################
 
