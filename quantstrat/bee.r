@@ -4,11 +4,11 @@
 
 ## uncomment this and comment out sym in the DEFINE VARIABLES section ####
 
-#sym      =  commandArgs(trailingOnly = TRUE)
+sym      =  commandArgs(trailingOnly = TRUE)
 
 ############################# DEFINE VARIABLES ##############################
 
-sym      = 'SPY'
+#sym      = 'SPY'
 port     = 'bug'
 acct     = 'spray'
 currency = 'USD'
@@ -19,7 +19,7 @@ sd       = 0.5
 
 ############################### GET DATA ####################################
 
-require(quantstrat)
+suppressMessages(require(quantstrat))
 getSymbols(sym, index.class=c("POSIXt","POSIXct"))
 
 ############################ INITIALIZE #####################################
@@ -111,15 +111,16 @@ bee <- add.rule(
 
 #################################### APPLY STRATEGY #######################
 
-applyStrategy(bee, port )
+suppressMessages(applyStrategy(bee, port, verbose=FALSE))
 
 #################################### TABLES ###############################
 
-print(getOrderBook(port))
+# print(getOrderBook(port))
 
 ############################ STAT OUTPUT #################################
 
-print()
+txns = getTxns(port, sym)
+cat('Net profit:', sum(txns$Net.Txn.Realized.PL), '\n')
 
 ################################## PLOTS ###################################
 
