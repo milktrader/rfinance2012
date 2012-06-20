@@ -1,5 +1,10 @@
 #!/usr/bin/Rscript --no-save
 
+########################## OPTIONAL COMMANDLINE ARG #####################
+
+## uncomment this and comment out sym in the DEFINE VARIABLES section ####
+
+#sym      =  commandArgs(trailingOnly = TRUE)
 
 ############################# DEFINE VARIABLES ##############################
 
@@ -112,6 +117,9 @@ applyStrategy(bee, port )
 
 print(getOrderBook(port))
 
+############################ STAT OUTPUT #################################
+
+print()
 
 ################################## PLOTS ###################################
 
