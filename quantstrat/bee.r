@@ -12,7 +12,7 @@ sd       = 0.5
 ############################### GET DATA ####################################
 
 require(quantstrat)
-getSymbols(sym)
+getSymbols(sym, index.class=c("POSIXt","POSIXct"))
 
 ############################ INITIALIZE #####################################
 
