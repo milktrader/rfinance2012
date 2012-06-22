@@ -2,17 +2,22 @@
 
 ########################## OPTIONAL COMMANDLINE ARG #####################
 
-## uncomment this and comment out sym in the DEFINE VARIABLES section ####
+## uncomment this and comment out 'SPY' in the DEFINE VARIABLES section ####
 
-sym      =  commandArgs(trailingOnly = TRUE)
+#args    = commandArgs(TRUE)
+
+#'SPY'  =  args[1]    
+#fast =  args[2]    
+#slow =  args[3]    
+#sd   =  args[4]    
 
 ############################# DEFINE VARIABLES ##############################
 
-#sym      = 'SPY'
+sym      = 'AAPL'
 port     = 'bug'
 acct     = 'spray'
-currency = 'USD'
 initEq   = 100000
+initDate = '1950-01-01'
 fast     = 10
 slow     = 30
 sd       = 0.5
@@ -24,9 +29,11 @@ getSymbols(sym, index.class=c("POSIXt","POSIXct"))
 
 ############################ INITIALIZE #####################################
 
-initPortf(port, symbols=sym, currency=currency)
-initAcct(acct, portfolios=port, currency=currency)
-initOrders(port )
+currency('USD')
+stock(sym ,currency='USD', multiplier=1)
+initPortf(port, sym, initDate=initDate)
+initAcct(acct, port, initDate=initDate)
+initOrders(port, initDate=initDate )
 bee     = strategy(port)
 
 ############################ INDICATORS ####################################
@@ -111,7 +118,7 @@ bee <- add.rule(
 
 #################################### APPLY STRATEGY #######################
 
-suppressWarnings(applyStrategy(bee, port, verbose=FALSE))
+applyStrategy(bee, port, verbose=FALSE)
 
 #################################### TABLES ###############################
 
@@ -128,7 +135,7 @@ cat('Net profit:', sum(txns$Net.Txn.Realized.PL), '\n')
 # themelist$col$up.col = 'lightblue'
 # themelist$col$dn.col = 'lightpink'
 # 
-# chart.Posn(Portfolio=port, Symbol=sym, theme=themelist)
+# chart.Posn(Portfolio=port, 'SPY'bol='SPY', theme=themelist)
 
 
 ################################# TESTING ###############################
