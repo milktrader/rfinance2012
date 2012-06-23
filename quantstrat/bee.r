@@ -2,11 +2,9 @@
 
 ########################## OPTIONAL COMMANDLINE ARG #####################
 
-## uncomment this and comment out 'SPY' in the DEFINE VARIABLES section ####
+## uncomment this and comment out sym = line in the DEFINE VARIABLES section ####
 
-#args    = commandArgs(TRUE)
-
-#'SPY'  =  args[1]    
+#sym     = commandArgs(TRUE)
 
 ############################# DEFINE VARIABLES ##############################
 
