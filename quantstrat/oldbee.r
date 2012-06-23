@@ -1,18 +1,9 @@
-#!/usr/bin/Rscript --no-save
-
-########################## OPTIONAL COMMANDLINE ARG #####################
-
-## uncomment this and comment out 'SPY' in the DEFINE VARIABLES section ####
-
-#args    = commandArgs(TRUE)
-
-#'SPY'  =  args[1]    
-
 ############################# DEFINE VARIABLES ##############################
 
-sym      = 'AAPL'
+sym      = 'SPY'
 port     = 'bug'
 acct     = 'spray'
+currency = 'USD'
 initEq   = 100000
 initDate = '1950-01-01'
 fast     = 10
@@ -21,7 +12,7 @@ sd       = 0.5
 
 ############################### GET DATA ####################################
 
-suppressMessages(require(quantstrat))
+require(quantstrat)
 getSymbols(sym, index.class=c("POSIXt","POSIXct"))
 
 ############################ INITIALIZE #####################################
@@ -70,7 +61,7 @@ bee <- add.signal(
                   strategy  = bee,
                   name      = 'sigCrossover',
                   arguments = list(columns=c('fast','up'),
-                                   relationship='gt'),
+                                   relationship='gte'),
                   label     = 'fast.gt.up')
 
 ########################## RULES #########################################
@@ -83,7 +74,7 @@ bee <- add.rule(
                                  orderqty  = 100,
                                  ordertype = 'market',
                                  orderside = 'long',
-                                 osFUN     = 'osMaxPos'),
+                                 osFUN='osMaxPos'),
 
                 type      = 'enter',
                 label     = 'EnterLONG')
@@ -99,6 +90,7 @@ bee <- add.rule(
                 type      = 'exit',
                 label     = 'ExitLONG')
 
+
 bee <- add.rule(
                 strategy  = bee,
                 name      = 'ruleSignal',
@@ -107,7 +99,7 @@ bee <- add.rule(
                                   orderqty  =  -100,
                                   ordertype = 'market',
                                   orderside = 'short',
-                                 osFUN      = 'osMaxPos'),
+                                  osFUN='osMaxPos'),
                 type      = 'enter',
                 label     = 'EnterSHORT')
 
@@ -124,16 +116,12 @@ bee <- add.rule(
 
 #################################### APPLY STRATEGY #######################
 
-applyStrategy(bee, port, verbose=FALSE)
+applyStrategy(bee, port )
 
 #################################### TABLES ###############################
 
-# print(getOrderBook(port))
+print(getOrderBook(port))
 
-############################ STAT OUTPUT #################################
-
-txns = getTxns(port, sym)
-cat('Net profit:', sum(txns$Net.Txn.Realized.PL), '\n')
 
 ################################## PLOTS ###################################
 
@@ -141,12 +129,10 @@ cat('Net profit:', sum(txns$Net.Txn.Realized.PL), '\n')
 # themelist$col$up.col = 'lightblue'
 # themelist$col$dn.col = 'lightpink'
 # 
-# chart.Posn(Portfolio=port, 'SPY'bol='SPY', theme=themelist)
+# chart.Posn(Portfolio=port, Symbol=sym, theme=themelist)
 
 
 ################################# TESTING ###############################
 
 
 # head(.strategy$order_book.bug$bug$SPY[,c(1,4,11)])
-
-
