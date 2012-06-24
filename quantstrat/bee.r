@@ -8,7 +8,7 @@
 
 ############################# DEFINE VARIABLES ##############################
 
-sym      = 'AAPL'
+sym      = 'SPY'
 port     = 'bug'
 acct     = 'spray'
 initEq   = 100000
@@ -126,7 +126,7 @@ applyStrategy(bee, port, verbose=FALSE)
 
 #################################### UPDATE ###############################
 
-updatePortf(port, sym)
+updatePortf(port, sym, Date=paste('::',as.Date(Sys.time()),sep=''))
 
 #################################### TABLES ###############################
 
