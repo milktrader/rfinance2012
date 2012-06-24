@@ -4,7 +4,7 @@
 
 ## uncomment this and comment out sym = line in the DEFINE VARIABLES section ####
 
-#sym     = commandArgs(TRUE)
+# sym     = commandArgs(TRUE)
 
 ############################# DEFINE VARIABLES ##############################
 
@@ -124,23 +124,27 @@ bee <- add.rule(
 
 applyStrategy(bee, port, verbose=FALSE)
 
+#################################### UPDATE ###############################
+
+updatePortf(port, sym)
+
 #################################### TABLES ###############################
 
-# print(getOrderBook(port))
+#print(getOrderBook(port))
 
 ############################ STAT OUTPUT #################################
 
-txns = getTxns(port, sym)
-cat('Net profit:', sum(txns$Net.Txn.Realized.PL), '\n')
+#txns = getTxns(port, sym)
+#cat('Net profit:', sum(txns$Net.Txn.Realized.PL), '\n')
 
 ################################## PLOTS ###################################
 
-# themelist            = chart_theme()
-# themelist$col$up.col = 'lightblue'
-# themelist$col$dn.col = 'lightpink'
+#themelist            = chart_theme()
+#themelist$col$up.col = 'lightblue'
+#themelist$col$dn.col = 'lightpink'
 # 
-# chart.Posn(Portfolio=port, 'SPY'bol='SPY', theme=themelist)
-
+#chart.Posn(port, sym, theme=themelist)
+#
 
 ################################# TESTING ###############################
 
