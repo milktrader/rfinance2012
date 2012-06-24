@@ -27,7 +27,7 @@ getSymbols(sym, index.class=c("POSIXt","POSIXct"))
 currency('USD')
 stock(sym ,currency='USD', multiplier=1)
 initPortf(port, sym, initDate=initDate)
-initAcct(acct, port, initDate=initDate)
+initAcct(acct, port, initEq=initEq, initDate=initDate)
 initOrders(port, initDate=initDate )
 bee     = strategy(port)
 
@@ -127,13 +127,15 @@ applyStrategy(bee, port, verbose=FALSE)
 #################################### UPDATE ###############################
 
 updatePortf(port, sym, Date=paste('::',as.Date(Sys.time()),sep=''))
-
+updateAcct(acct)
 #################################### TABLES ###############################
 
 #print(getOrderBook(port))
 
 ############################ STAT OUTPUT #################################
 
+stats = tradeStats(port)
+cat('Profit Factor: ', stats$Profit.Factor, '\n')
 #txns = getTxns(port, sym)
 #cat('Net profit:', sum(txns$Net.Txn.Realized.PL), '\n')
 
