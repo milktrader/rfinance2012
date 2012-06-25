@@ -7,8 +7,9 @@ funstats <- function(returns) {
          print('Your system is winning!'), 
          print('Your system is losing!'))
         
-  baz = SharpeRatio.annualized(returns)
-  cat('The Annualized Sharpe Ratio is: ',  baz, '\n')
+  cat('The Annualized Sharpe Ratio is: ',  
+       SharpeRatio.annualized(returns), 
+       '\n')
 
 
 

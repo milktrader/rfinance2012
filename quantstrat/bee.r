@@ -10,7 +10,7 @@
 
 sym      = 'SPY'
 port     = 'bug'
-acct     = 'spray'
+acct     = 'colony'
 initEq   = 100000
 initDate = '1950-01-01'
 fast     = 10
@@ -132,12 +132,31 @@ updateAcct(acct)
 
 #print(getOrderBook(port))
 
-############################ STAT OUTPUT #################################
+###################### UTILIZE blotter::tradeStats ##########################
 
 stats = tradeStats(port)
 cat('Profit Factor: ', stats$Profit.Factor, '\n')
+
 #txns = getTxns(port, sym)
 #cat('Net profit:', sum(txns$Net.Txn.Realized.PL), '\n')
+
+######################### UTILIZE PerformanceAnalytics ####################
+
+suppressMessages(require(PerformanceAnalytics))
+
+returns = PortfReturns(acct)
+
+print('A histogram with a with a qqplot is being plotted now ...')
+chart.Histogram(returns, methods='add.qqplot')
+
+ifelse(last(SMA(returns, n=10)) > last(SMA(returns, n=30)), 
+       print('Your system is in an uptrend: Hurray!'), 
+       print('Your system is in a downtrend: Caution!'))
+      
+cat('The Annualized Sharpe Ratio is: ',  
+     SharpeRatio.annualized(returns), 
+     '\n')
+
 
 ################################## PLOTS ###################################
 
