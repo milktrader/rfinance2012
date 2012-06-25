@@ -128,17 +128,19 @@ applyStrategy(bee, port, verbose=FALSE)
 
 updatePortf(port, sym, Date=paste('::',as.Date(Sys.time()),sep=''))
 updateAcct(acct)
-#################################### TABLES ###############################
+################################## ORDER BOOK ###########################
 
-#print(getOrderBook(port))
+print(getOrderBook(port))
 
-###################### UTILIZE blotter::tradeStats ##########################
+###################### UTILIZE blotter ##################################
+
+cat('From the blotter package ...', '\n' )
 
 stats = tradeStats(port)
 cat('Profit Factor: ', stats$Profit.Factor, '\n')
 
-#txns = getTxns(port, sym)
-#cat('Net profit:', sum(txns$Net.Txn.Realized.PL), '\n')
+txns  = getTxns(port, sym)
+cat('Net profit:', sum(txns$Net.Txn.Realized.PL), '\n')
 
 ######################### UTILIZE PerformanceAnalytics ####################
 
@@ -146,17 +148,27 @@ suppressMessages(require(PerformanceAnalytics))
 
 returns = PortfReturns(acct)
 
-print('A histogram with a with a qqplot is being plotted now ...')
+cat('From the PerformanceAnalytics package...', '\n' )
+
+cat('A histogram with a with a qqplot is being plotted now ...', '\n')
 chart.Histogram(returns, methods='add.qqplot')
 
-ifelse(last(SMA(returns, n=10)) > last(SMA(returns, n=30)), 
-       print('Your system is in an uptrend: Hurray!'), 
-       print('Your system is in a downtrend: Caution!'))
-      
 cat('The Annualized Sharpe Ratio is: ',  
      SharpeRatio.annualized(returns), 
      '\n')
 
+cat('The Annualized Return is: ',  
+     100 * Return.annualized(returns), 
+     '%', 
+     '\n')
+
+################################## EXPERIMENTAL #########################
+
+cat('Applying some TA to the equity curve..', '\n' )
+
+ifelse(last(SMA(returns, n=10)) > last(SMA(returns, n=30)), 
+       print('Your system is in an uptrend: Hurray!'), 
+       print('Your system is in a downtrend: Caution!'))
 
 ################################## PLOTS ###################################
 
