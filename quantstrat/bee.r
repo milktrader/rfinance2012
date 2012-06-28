@@ -43,21 +43,21 @@ addPosLimit(
 ############################### SIZING FUNCTION ########################
 
 
-osEquityCurve <- function (timestamp, orderqty, portfolio, symbol, ruletype, ...)
-{
-  tempPortfolio = getPortfolio(port)
-  dummy         = updatePortf(Portfolio=port, Dates=paste( '::' ,as.Date(timestamp),sep='' ))
-  trading.pl    =  sum(getPortfolio(port)$summary$Net.Trading.PL) 
-
-  assign(paste("portfolio.", port, sep=""), tempPortfolio, pos=.blotter) 
-
-  total.equity  = initEq+trading.pl 
-  tradeSize     = total.equity * trade.percent
-  ClosePrice    = as.numeric(Cl(mktdata[timestamp,])) 
-  orderqty      =  sign(orderqty)*round(tradeSize/ClosePrice) 
-
-  return(orderqty)
-}
+#osEquityCurve <- function (timestamp, orderqty, portfolio, symbol, ruletype, ...)
+#{
+#  tempPortfolio = getPortfolio(port)
+#  dummy         = updatePortf(Portfolio=port, Dates=paste( '::' ,as.Date(timestamp),sep='' ))
+#  trading.pl    =  sum(getPortfolio(port)$summary$Net.Trading.PL) 
+#
+#  assign(paste("portfolio.", port, sep=""), tempPortfolio, pos=.blotter) 
+#
+#  total.equity  = initEq+trading.pl 
+#  tradeSize     = total.equity * trade.percent
+#  ClosePrice    = as.numeric(Cl(mktdata[timestamp,])) 
+#  orderqty      =  sign(orderqty)*round(tradeSize/ClosePrice) 
+#
+#  return(orderqty)
+#}
 
 ############################ INDICATORS ####################################
 
@@ -101,7 +101,7 @@ bee <- add.rule(
                                  orderqty  = 100,
                                  ordertype = 'market',
                                  orderside = 'long',
-                                 osFUN     = 'osEquityCurve'),
+                                 osFUN     = 'osMaxPos'),
 
                 type      = 'enter',
                 label     = 'EnterLONG')
@@ -125,7 +125,7 @@ bee <- add.rule(
                                   orderqty  =  -100,
                                   ordertype = 'market',
                                   orderside = 'short',
-                                  osFUN     = 'osEquityCurve'),
+                                  osFUN     = 'osMaxPos'),
                 type      = 'enter',
                 label     = 'EnterSHORT')
 
@@ -171,8 +171,8 @@ returns = PortfReturns(acct)
 #
 #cat('From the PerformanceAnalytics package...', '\n' )
 #
-#cat('A histogram with a with a qqplot is being plotted now ...', '\n')
-chart.Histogram(returns, methods='add.qqplot')
+#cat('A histogram is being plotted now ...', '\n')
+chart.Histogram(returns)
 #
 #cat('The Annualized Sharpe Ratio is: ',  
 #     SharpeRatio.annualized(returns), 
