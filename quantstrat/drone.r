@@ -2,8 +2,8 @@
  
 ################## LOAD PACKAGES ######################################
 
-suppressMessages(require(PerformanceAnalytics))
 suppressMessages(require(quantstrat))
+suppressMessages(require(PerformanceAnalytics)) #for other testing later
 
 ############################# DEFINE VARIABLES ##############################
 
@@ -12,7 +12,6 @@ port          = 'bug'
 acct          = 'colony'
 initEq        = 100000
 initDate      = '1950-01-01'
-trade.percent = .1
 fast          = 10
 slow          = 30
 sd            = 0.5
