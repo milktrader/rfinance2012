@@ -20,7 +20,6 @@ sd            = 0.5
 ############################### LOAD DATA ####################################
 
 load('~/clones/blotter/pkg/quantstrat/sandbox/GSPC.rda')
-#getSymbols(sym, index.class=c("POSIXt","POSIXct"))
 
 ############################ INITIALIZE #####################################
 
@@ -122,41 +121,43 @@ bee <- add.rule(
 
 #################################### APPLY STRATEGY #######################
 
-applyStrategy(bee, port, prefer='Open')
+applyStrategy(bee, port, prefer='Open', verbose=FALSE)
 
 #################################### UPDATE ###############################
 
 updatePortf(port, sym, Date=paste('::',as.Date(Sys.time()),sep=''))
 updateAcct(acct)
 
-################################## ORDER BOOK ###########################
+######################### TEST STATISTICS ####################
 
-print(getOrderBook(port))
+bookStatus = .strategy$order_book.bug$bug$GSPC$Order.Status 
+bookQty    = .strategy$order_book.bug$bug$GSPC$Order.Qty
 
-###################### UTILIZE blotter ##################################
+t1 = nrow(bookStatus[bookStatus$Order.Status == 'rejected'])    # 34
+t2 = nrow(bookStatus[bookStatus$Order.Status == 'closed'])      # 162
+t3 = nrow(bookStatus[bookStatus$Order.Status == 'open'])        # 2 
 
-# cat('From the blotter package ...', '\n' )
-# 
-# stats = tradeStats(port)
-# cat('Profit Factor: ', stats$Profit.Factor, '\n')
-# 
-# txns  = getTxns(port, sym)
-# cat('Net profit:', sum(txns$Net.Txn.Realized.PL), '\n')
+t4 = nrow(mktdata[mktdata$fast.gt.up == 1])   # 61
+t5 = nrow(mktdata[mktdata$fast.lt.dn == 1])   # 54 
 
-######################### UTILIZE PerformanceAnalytics ####################
+t6 = suppressWarnings(max(as.numeric(bookQty), na.rm=TRUE)) # 100
+t7 = suppressWarnings(min(as.numeric(bookQty), na.rm=TRUE)) # -100
 
-#
-returns = PortfReturns(acct)
-#
-#
-#cat('The Annualized Sharpe Ratio is: ',  
-#     SharpeRatio.annualized(returns), 
-#     '\n')
-#
-#cat('The Annualized Return is: ',  
-#     100 * Return.annualized(returns), 
-#     'percent', 
-#     '\n')
+print('Test Results:')
+print('')
+
+myUnit  <- function(t1=t1, t2=t2, t3=t3, t4=t4, t5=t5, t6=t6, t7=t7) {
+
+    ifelse(t1 == 34,   print("PASS"), print("FAIL - rejected total wrong"))
+    ifelse(t2 == 162,  print("PASS"), print("FAIL - closed total wrong"))
+    ifelse(t3 == 2,    print("PASS"), print("FAIL - open total wrong"))
+    ifelse(t4 == 61,   print("PASS"), print("FAIL - long signals wrong"))
+    ifelse(t5 == 54,   print("PASS"), print("FAIL - short signals wrong"))
+    ifelse(t6 == 100,  print("PASS"), print("FAIL - max position wrong"))
+    ifelse(t7 == -100, print("PASS"), print("FAIL - max position wrong"))
+}
+
+myUnit(t1,t2,t3,t4,t5,t6,t7)
 
 
 
