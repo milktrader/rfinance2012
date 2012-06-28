@@ -146,7 +146,7 @@ t7 = suppressWarnings(min(as.numeric(bookQty), na.rm=TRUE)) # -100
 print('Test Results:')
 print('')
 
-myUnit  <- function(t1=t1, t2=t2, t3=t3, t4=t4, t5=t5, t6=t6, t7=t7) {
+myUnit  <- function(t1, t2, t3, t4, t5, t6, t7) {
 
     ifelse(t1 == 34,   print("PASS"), print("FAIL - rejected total wrong"))
     ifelse(t2 == 162,  print("PASS"), print("FAIL - closed total wrong"))
@@ -154,7 +154,7 @@ myUnit  <- function(t1=t1, t2=t2, t3=t3, t4=t4, t5=t5, t6=t6, t7=t7) {
     ifelse(t4 == 61,   print("PASS"), print("FAIL - long signals wrong"))
     ifelse(t5 == 54,   print("PASS"), print("FAIL - short signals wrong"))
     ifelse(t6 == 100,  print("PASS"), print("FAIL - max position wrong"))
-    ifelse(t7 == -100, print("PASS"), print("FAIL - max position wrong"))
+    ifelse(t7 == -100, print("PASS"), print("FAIL - min position wrong"))
 }
 
 myUnit(t1,t2,t3,t4,t5,t6,t7)
