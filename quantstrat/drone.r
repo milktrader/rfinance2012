@@ -134,34 +134,34 @@ returns = PortfReturns(acct)
 
 ######################### TEST STATISTICS ####################
 
-bookStatus = .strategy$order_book.bug$bug$GSPC$Order.Status 
-bookQty    = .strategy$order_book.bug$bug$GSPC$Order.Qty
-
-t1 = nrow(bookStatus[bookStatus$Order.Status == 'rejected'])    # 34
-t2 = nrow(bookStatus[bookStatus$Order.Status == 'closed'])      # 162
-t3 = nrow(bookStatus[bookStatus$Order.Status == 'open'])        # 2 
-
-t4 = nrow(mktdata[mktdata$fast.gt.up == 1])   # 61
-t5 = nrow(mktdata[mktdata$fast.lt.dn == 1])   # 54 
-
-t6 = suppressWarnings(max(as.numeric(bookQty), na.rm=TRUE)) # 100
-t7 = suppressWarnings(min(as.numeric(bookQty), na.rm=TRUE)) # -100
-
-print('Test Results:')
-print('')
-
-myUnit  <- function(t1, t2, t3, t4, t5, t6, t7) {
-
-    ifelse(t1 == 34,   print("PASS"), print("FAIL - rejected total wrong"))
-    ifelse(t2 == 162,  print("PASS"), print("FAIL - closed total wrong"))
-    ifelse(t3 == 2,    print("PASS"), print("FAIL - open total wrong"))
-    ifelse(t4 == 61,   print("PASS"), print("FAIL - long signals wrong"))
-    ifelse(t5 == 54,   print("PASS"), print("FAIL - short signals wrong"))
-    ifelse(t6 == 100,  print("PASS"), print("FAIL - max position wrong"))
-    ifelse(t7 == -100, print("PASS"), print("FAIL - min position wrong"))
-}
-
-myUnit(t1,t2,t3,t4,t5,t6,t7)
-
+#bookStatus = .strategy$order_book.bug$bug$GSPC$Order.Status 
+#bookQty    = .strategy$order_book.bug$bug$GSPC$Order.Qty
+#
+#t1 = nrow(bookStatus[bookStatus$Order.Status == 'rejected'])    # 34
+#t2 = nrow(bookStatus[bookStatus$Order.Status == 'closed'])      # 162
+#t3 = nrow(bookStatus[bookStatus$Order.Status == 'open'])        # 2 
+#
+#t4 = nrow(mktdata[mktdata$fast.gt.up == 1])   # 61
+#t5 = nrow(mktdata[mktdata$fast.lt.dn == 1])   # 54 
+#
+#t6 = suppressWarnings(max(as.numeric(bookQty), na.rm=TRUE)) # 100
+#t7 = suppressWarnings(min(as.numeric(bookQty), na.rm=TRUE)) # -100
+#
+#print('Test Results:')
+#print('')
+#
+#myUnit  <- function(t1, t2, t3, t4, t5, t6, t7) {
+#
+#    ifelse(t1 == 34,   print("PASS"), print("FAIL - rejected total wrong"))
+#    ifelse(t2 == 162,  print("PASS"), print("FAIL - closed total wrong"))
+#    ifelse(t3 == 2,    print("PASS"), print("FAIL - open total wrong"))
+#    ifelse(t4 == 61,   print("PASS"), print("FAIL - long signals wrong"))
+#    ifelse(t5 == 54,   print("PASS"), print("FAIL - short signals wrong"))
+#    ifelse(t6 == 100,  print("PASS"), print("FAIL - max position wrong"))
+#    ifelse(t7 == -100, print("PASS"), print("FAIL - min position wrong"))
+#}
+#
+#myUnit(t1,t2,t3,t4,t5,t6,t7)
+#
 
 
