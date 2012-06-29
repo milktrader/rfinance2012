@@ -149,9 +149,13 @@ applyStrategy(bee, port, prefer='Open')
 updatePortf(port, sym, Date=paste('::',as.Date(Sys.time()),sep=''))
 updateAcct(acct)
 
-################################## ORDER BOOK ###########################
+######################### ISOLATE RETURNS ##########################
 
-print(getOrderBook(port))
+returns = PortfReturns(acct)
+
+###################### ISOLATE ORDER BOOK ###########################
+
+book    = getOrderBook(port)
 
 ###################### UTILIZE blotter ##################################
 
@@ -163,11 +167,10 @@ print(getOrderBook(port))
 # txns  = getTxns(port, sym)
 # cat('Net profit:', sum(txns$Net.Txn.Realized.PL), '\n')
 
+
 ######################### UTILIZE PerformanceAnalytics ####################
 
 suppressMessages(require(PerformanceAnalytics))
-#
-returns = PortfReturns(acct)
 #
 #cat('From the PerformanceAnalytics package...', '\n' )
 #

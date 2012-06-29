@@ -127,6 +127,11 @@ applyStrategy(bee, port, prefer='Open', verbose=FALSE)
 updatePortf(port, sym, Date=paste('::',as.Date(Sys.time()),sep=''))
 updateAcct(acct)
 
+
+######################### ISOLATE RETURNS ####################
+
+returns = PortfReturns(acct)
+
 ######################### TEST STATISTICS ####################
 
 bookStatus = .strategy$order_book.bug$bug$GSPC$Order.Status 
