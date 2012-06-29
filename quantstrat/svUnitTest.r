@@ -1,3 +1,7 @@
+################# LOAD PACKAGE #####################
+
+suppressMessages(require(svUnit))
+
 ######### DEFINE OUTSIDE TEST FUNCTION ############
 
 statusCheck = 'should have correct number of each status'
@@ -40,5 +44,11 @@ test(qtyCheck) = function() {
   checkEquals(t7, -100)
 }
  
- 
+################ RUN THE TESTS ###############################
+
+clearLog()
+runTest(statusCheck)
+runTest(signalCheck)
+runTest(qtyCheck)
+Log()
 
