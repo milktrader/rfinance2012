@@ -1,11 +1,2 @@
-hello <- cxxfunction(
-
-  signature(),
-
-  body="cout << "hello";
-        "
-
-
-  plugin="Rcpp"
-
-)
+hello = function()
+  print('hello')
