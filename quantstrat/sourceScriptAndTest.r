@@ -1,10 +1,10 @@
-source('bee.r')
-
 require(svUnit)
+
+source('bee.r')
 
 TradeStats = 'Testing consistent trade stats'
 
-test(TradeStats) = function() {
+test(TradeStats.SPY) = function() {
 
   stats = tradeStats(port)
 
@@ -19,8 +19,9 @@ test(TradeStats) = function() {
   checkEquals( stats$Min.Equity, -1506)
 }
 
+
 clearLog()
-runTest(TradeStats)
+runTest(TradeStats.SPY)
 
 ########################## CLEANUP ENVIRONMENT #####################
 
@@ -30,7 +31,7 @@ suppressWarnings(rm("sym","port","acct","initEq","initDate","fast",'slow','sd'))
 
 
 
-source('bee1.r')
+source('bee.GLD.r')
 
 TradeStats.drone = 'Testing consistent trade stats'
 
@@ -49,6 +50,6 @@ test(TradeStats.drone) = function() {
   checkEquals( stats$Min.Equity, -1506)
 }
 
-runTest(TradeStats.drone)
+runTest(TradeStats.GLD)
 Log()
-summary(Log())
+#summary(Log())
