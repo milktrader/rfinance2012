@@ -118,7 +118,7 @@ bee <- add.rule(
 
 #################################### APPLY STRATEGY #######################
 
-applyStrategy(bee, port, prefer='Open')
+applyStrategy(bee, port, prefer='Open', verbose=FALSE)
 
 #################################### UPDATE ###############################
 
