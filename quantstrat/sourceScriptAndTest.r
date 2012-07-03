@@ -22,6 +22,14 @@ test(TradeStats) = function() {
 clearLog()
 runTest(TradeStats)
 
+########################## CLEANUP ENVIRONMENT #####################
+
+suppressWarnings(rm("order_book.bug",pos=.strategy))
+suppressWarnings(rm("account.colony","portfolio.bug",pos=.blotter))
+suppressWarnings(rm("sym","port","acct","initEq","initDate","fast",'slow','sd'))
+
+
+
 source('bee1.r')
 
 TradeStats.drone = 'Testing consistent trade stats'

@@ -1,7 +1,7 @@
 
 #!/usr/bin/Rscript --no-save
 
-########################## OPTIONAL COMMANDLINE ARG #####################
+
 
 ## uncomment this and comment out sym = line in the DEFINE VARIABLES section ####
 
@@ -9,12 +9,11 @@
 
 ############################# DEFINE VARIABLES ##############################
 
-sym           = 'SPY'
+sym           = 'GLD'
 port          = 'bug'
 acct          = 'colony'
 initEq        = 100000
 initDate      = '1950-01-01'
-trade.percent = .1
 fast          = 10
 slow          = 30
 sd            = 0.5
