@@ -1,27 +1,24 @@
-#!/usr/bin/Rscript --no-save
+beefun  <-  function() {
 
-########################## OPTIONAL COMMANDLINE ARG #####################
+ 
+################## LOAD PACKAGES ######################################
 
-## uncomment this and comment out sym = line in the DEFINE VARIABLES section ####
-
-# sym     = commandArgs(TRUE)
+suppressMessages(require(quantstrat))
 
 ############################# DEFINE VARIABLES ##############################
 
-sym           = 'SPY'
+sym           = 'GSPC'
 port          = 'bug'
 acct          = 'colony'
 initEq        = 100000
 initDate      = '1950-01-01'
-trade.percent = .1
 fast          = 10
 slow          = 30
 sd            = 0.5
 
-############################### GET DATA ####################################
+############################### LOAD DATA ####################################
 
-suppressMessages(require(quantstrat))
-getSymbols(sym, index.class=c("POSIXt","POSIXct"))
+load('~/clones/blotter/pkg/quantstrat/sandbox/GSPC.rda')
 
 ############################ INITIALIZE #####################################
 
@@ -30,7 +27,7 @@ stock(sym ,currency='USD', multiplier=1)
 initPortf(port, sym, initDate=initDate)
 initAcct(acct, port, initEq=initEq, initDate=initDate)
 initOrders(port, initDate=initDate )
-bee     = strategy(port)
+bee = strategy(port)
 
 ############################### MAX POSITION LOGIC ########################
 
@@ -39,25 +36,6 @@ addPosLimit(
             symbol=sym, 
             timestamp=initDate,  
             maxpos=100)
-
-############################### SIZING FUNCTION ########################
-
-
-#osEquityCurve <- function (timestamp, orderqty, portfolio, symbol, ruletype, ...)
-#{
-#  tempPortfolio = getPortfolio(port)
-#  dummy         = updatePortf(Portfolio=port, Dates=paste( '::' ,as.Date(timestamp),sep='' ))
-#  trading.pl    =  sum(getPortfolio(port)$summary$Net.Trading.PL) 
-#
-#  assign(paste("portfolio.", port, sep=""), tempPortfolio, pos=.blotter) 
-#
-#  total.equity  = initEq+trading.pl 
-#  tradeSize     = total.equity * trade.percent
-#  ClosePrice    = as.numeric(Cl(mktdata[timestamp,])) 
-#  orderqty      =  sign(orderqty)*round(tradeSize/ClosePrice) 
-#
-#  return(orderqty)
-#}
 
 ############################ INDICATORS ####################################
 
@@ -142,91 +120,17 @@ bee <- add.rule(
 
 #################################### APPLY STRATEGY #######################
 
-applyStrategy(bee, port, prefer='Open')
+applyStrategy(bee, port, prefer='Open', verbose=FALSE)
 
 #################################### UPDATE ###############################
 
 updatePortf(port, sym, Date=paste('::',as.Date(Sys.time()),sep=''))
 updateAcct(acct)
 
-######################### ISOLATE RETURNS ##########################
+########################### RETURN PROFIT FACTOR ###############################
 
-returns = PortfReturns(acct)
+stats = tradeStats(port)
+PF = stats$Profit.Factor
 
-###################### ISOLATE ORDER BOOK ###########################
-
-book    = getOrderBook(port)
-
-###################### UTILIZE blotter ##################################
-
-# cat('From the blotter package ...', '\n' )
-# 
-# stats = tradeStats(port)
-# cat('Profit Factor: ', stats$Profit.Factor, '\n')
-# 
-# txns  = getTxns(port, sym)
-# cat('Net profit:', sum(txns$Net.Txn.Realized.PL), '\n')
-
-
-######################### UTILIZE PerformanceAnalytics ####################
-
-suppressMessages(require(PerformanceAnalytics))
-#
-#cat('From the PerformanceAnalytics package...', '\n' )
-#
-#cat('A histogram is being plotted now ...', '\n')
-chart.Histogram(returns)
-#
-#cat('The Annualized Sharpe Ratio is: ',  
-#     SharpeRatio.annualized(returns), 
-#     '\n')
-#
-#cat('The Annualized Return is: ',  
-#     100 * Return.annualized(returns), 
-#     'percent', 
-#     '\n')
-
-################################## EXPERIMENTAL #########################
-
-#cat('Applying some TA to the equity curve..', '\n' )
-#
-#ifelse(last(SMA(returns, n=10)) > last(SMA(returns, n=30)), 
-#       print('Your system is in an uptrend: Hurray!'), 
-#       print('Your system is in a downtrend: Caution!'))
-
-################################## PLOTS ###################################
-
-#themelist            = chart_theme()
-#themelist$col$up.col = 'lightblue'
-#themelist$col$dn.col = 'lightpink'
-# 
-#chart.Posn(port, sym, theme=themelist)
-#
-
-################################# TESTING ###############################
-
-require(svUnit)
-
-TradeStats = 'Testing consistent trade stats'
-
-test(TradeStats) = function() {
-
-  stats = tradeStats(port)
-
-  checkEquals( stats$Num.Txns, 75)
-  checkEquals( stats$Num.Trades, 37)
-  checkEquals( stats$Net.Trading.PL, 2468)
-  checkEquals( stats$Largest.Winner, 3302)
-  checkEquals( stats$Largest.Loser, -1099)
-  checkEquals( stats$Gross.Profits, 12914)
-  checkEquals( stats$maxDrawdown, -4346)
-  checkEquals( stats$Max.Equity, 3902)
-  checkEquals( stats$Min.Equity, -1506)
+return(PF)
 }
-
-################ RUN THE TEST ###############################
-
-clearLog()
-runTest(TradeStats)
-Log()
-summary(Log())
