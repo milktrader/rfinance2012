@@ -1,9 +1,11 @@
-#!/usr/bin/Rscript --no-save
-
-
+#
+# Bumblebee trading system
+# copyright 2009-2012, Algorithm Alpha, LLC
+# Licensed GPL-2
+#
 ############################# DEFINE VARIABLES ##############################
 
-sym           = 'GSPC'
+sym           = 'GLD'
 port          = 'bug'
 acct          = 'colony'
 initEq        = 100000
@@ -15,7 +17,7 @@ sd            = 0.5
 ############################### GET DATA ####################################
 
 suppressMessages(require(quantstrat))
-load('~/clones/blotter/pkg/quantstrat/sandbox/GSPC.rda')
+getSymbols(sym, to='2012-06-30', index.class=c("POSIXt","POSIXct"))
 
 ############################ INITIALIZE #####################################
 
@@ -125,4 +127,8 @@ applyStrategy(bee, port, prefer='Open', verbose=FALSE)
 updatePortf(port, sym, Date=paste('::',as.Date(Sys.time()),sep=''))
 updateAcct(acct)
 
-returns = PortfReturns(acct)
+########################### USEFUL CONTAINERS #############################
+
+straturn  = PortfReturns(acct)
+stratstat = tradeStats(port)
+

@@ -1,9 +1,11 @@
-#!/usr/bin/Rscript --no-save
-
-
+#
+# Bumblebee trading system
+# copyright 2009-2012, Algorithm Alpha, LLC
+# Licensed GPL-2
+#
 ############################# DEFINE VARIABLES ##############################
 
-sym           = 'SPY'
+sym           = 'GLD'
 port          = 'bug'
 acct          = 'colony'
 initEq        = 100000
@@ -125,5 +127,9 @@ applyStrategy(bee, port, prefer='Open', verbose=FALSE)
 updatePortf(port, sym, Date=paste('::',as.Date(Sys.time()),sep=''))
 updateAcct(acct)
 
-returns = PortfReturns(acct)
+########################### USEFUL CONTAINERS #############################
+
+
+straturn  = PortfReturns(acct)
+stratstat = tradeStats(port)
 
