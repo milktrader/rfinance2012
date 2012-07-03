@@ -3,7 +3,7 @@
 
 ############################# DEFINE VARIABLES ##############################
 
-sym           = 'SPY'
+sym           = 'GSPC'
 port          = 'bug'
 acct          = 'colony'
 initEq        = 100000
@@ -15,7 +15,7 @@ sd            = 0.5
 ############################### GET DATA ####################################
 
 suppressMessages(require(quantstrat))
-getSymbols(sym, index.class=c("POSIXt","POSIXct"))
+load('~/clones/blotter/pkg/quantstrat/sandbox/GSPC.rda')
 
 ############################ INITIALIZE #####################################
 
@@ -126,4 +126,3 @@ updatePortf(port, sym, Date=paste('::',as.Date(Sys.time()),sep=''))
 updateAcct(acct)
 
 returns = PortfReturns(acct)
-
