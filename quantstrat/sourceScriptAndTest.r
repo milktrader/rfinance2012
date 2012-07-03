@@ -1,8 +1,8 @@
 require(svUnit)
 
-source('bee.r')
+source('bee.SPY.r')
 
-TradeStats = 'Testing consistent trade stats'
+TradeStats.SPY = 'Testing consistent trade stats'
 
 test(TradeStats.SPY) = function() {
 
@@ -33,21 +33,21 @@ suppressWarnings(rm("sym","port","acct","initEq","initDate","fast",'slow','sd'))
 
 source('bee.GLD.r')
 
-TradeStats.drone = 'Testing consistent trade stats'
+TradeStats.GLD= 'Testing consistent trade stats'
 
-test(TradeStats.drone) = function() {
+test(TradeStats.GLD) = function() {
 
   stats = tradeStats(port)
 
-  checkEquals( stats$Num.Txns, 75)
-  checkEquals( stats$Num.Trades, 37)
-  checkEquals( stats$Net.Trading.PL, 2468)
-  checkEquals( stats$Largest.Winner, 3302)
-  checkEquals( stats$Largest.Loser, -1099)
-  checkEquals( stats$Gross.Profits, 12914)
-  checkEquals( stats$maxDrawdown, -4346)
-  checkEquals( stats$Max.Equity, 3902)
-  checkEquals( stats$Min.Equity, -1506)
+  checkEquals( stats$Num.Txns, 67)
+  checkEquals( stats$Num.Trades, 33)
+  checkEquals( stats$Net.Trading.PL, 2142)
+  checkEquals( stats$Largest.Winner, 1860)
+  checkEquals( stats$Largest.Loser, -1773)
+  checkEquals( stats$Gross.Profits, 9543)
+  checkEquals( stats$maxDrawdown, -4431)
+  checkEquals( stats$Max.Equity, 4970)
+  checkEquals( stats$Min.Equity, -2052)
 }
 
 runTest(TradeStats.GLD)
