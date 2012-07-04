@@ -50,9 +50,9 @@ end_t<-Sys.time()
 print("trade blotter portfolio update:")
 print(end_t-start_t)
 
-chart.Posn(Portfolio='macross',Symbol=stock.str)
-add_SMA(n=50 , on=1,col='blue')
-add_SMA(n=200, on=1)
+#chart.Posn(Portfolio='macross',Symbol=stock.str)
+#add_SMA(n=50 , on=1,col='blue')
+#add_SMA(n=200, on=1)
 
 ###############################################################################
 # R (http://r-project.org/) Quantitative Strategy Model Framework

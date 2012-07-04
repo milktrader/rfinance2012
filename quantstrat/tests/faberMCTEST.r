@@ -138,16 +138,16 @@ comb.out<-applyStrategy(strategy=stratFaber , portfolios='combMC')
 updatePortf(Portfolio='combMC',Dates=paste('::',as.Date(Sys.time()),sep=''))
 
 # hack for new quantmod graphics, remove later
-themelist<-chart_theme()
-themelist$col$up.col<-'lightgreen'
-themelist$col$dn.col<-'pink'
-for(symbol in symbols){
-    dev.new()
-    chart.Posn(Portfolio=symbol,Symbol=symbol,theme=themelist)
-    plot(add_SMA(n=10,col='darkgreen', on=1))
-}
-
-
+#themelist<-chart_theme()
+#themelist$col$up.col<-'lightgreen'
+#themelist$col$dn.col<-'pink'
+#for(symbol in symbols){
+#    dev.new()
+#    chart.Posn(Portfolio=symbol,Symbol=symbol,theme=themelist)
+#    plot(add_SMA(n=10,col='darkgreen', on=1))
+#}
+#
+#
 ###############################################################################
 # R (http://r-project.org/) Quantitative Strategy Model Framework
 #

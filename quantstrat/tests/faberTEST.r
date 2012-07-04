@@ -104,18 +104,18 @@ stratFaber <- add.rule(stratFaber, name='ruleSignal', arguments = list(sigcol="C
 start_t<-Sys.time()
 out<-try(applyStrategy(strategy=stratFaber , portfolios='faber'))
 end_t<-Sys.time()
-print("Strategy Loop:")
-print(end_t-start_t)
-
-# look at the order book
-#print(getOrderBook('faber'))
-
-start_t<-Sys.time()
-updatePortf(Portfolio='faber',Dates=paste('::',as.Date(Sys.time()),sep=''))
-end_t<-Sys.time()
-print("trade blotter portfolio update:")
-print(end_t-start_t)
-
+#print("Strategy Loop:")
+#print(end_t-start_t)
+#
+## look at the order book
+##print(getOrderBook('faber'))
+#
+#start_t<-Sys.time()
+#updatePortf(Portfolio='faber',Dates=paste('::',as.Date(Sys.time()),sep=''))
+#end_t<-Sys.time()
+#print("trade blotter portfolio update:")
+#print(end_t-start_t)
+#
 ## hack for new quantmod graphics, remove later
 #themelist<-chart_theme()
 #themelist$col$up.col<-'lightgreen'

@@ -185,17 +185,17 @@ getEndEq(account.st,Sys.time())
 #dev.new()
 #chartSeries(Cl(get(symb1))/Cl(get(symb2)),TA="addBBands(n=N,sd=SD)")
 
-ret1 <- PortfReturns(account.st)
-ret1$total <- rowSums(ret1)
-#ret1
-
-if("package:PerformanceAnalytics" %in% search() || require("PerformanceAnalytics",quietly=TRUE)) {
+#ret1 <- PortfReturns(account.st)
+#ret1$total <- rowSums(ret1)
+##ret1
+#
+#if("package:PerformanceAnalytics" %in% search() || require("PerformanceAnalytics",quietly=TRUE)) {
 #	getSymbols("SPY", from='1999-01-01')
 #	SPY.ret <- Return.calculate(SPY$SPY.Close)
 #	tmp <- merge(SPY.ret,ret1$total,all=FALSE)
 #	dev.new()
 #	charts.PerformanceSummary(ret1$total,geometric=FALSE,wealth.index=TRUE)
-}
+#}
 
 
 ###############################################################################

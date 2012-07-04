@@ -79,14 +79,14 @@ print(end_t-start_t)
 start_t<-Sys.time()
 updatePortf(Portfolio=portfolio.st,Dates=paste('::',as.Date(Sys.time()),sep=''))
 end_t<-Sys.time()
-print("trade blotter portfolio update:")
-print(end_t-start_t)
-
-chart.Posn(Portfolio=portfolio.st,Symbol=stock.str)
-plot(add_MACD(fast=fastMA, slow=slowMA, signal=signalMA,maType="EMA"))
-
-#look at the order book
-getOrderBook('macd')
+#print("trade blotter portfolio update:")
+#print(end_t-start_t)
+#
+#chart.Posn(Portfolio=portfolio.st,Symbol=stock.str)
+#plot(add_MACD(fast=fastMA, slow=slowMA, signal=signalMA,maType="EMA"))
+#
+##look at the order book
+#getOrderBook('macd')
 
 ###############################################################################
 # R (http://r-project.org/) Quantitative Strategy Model Framework

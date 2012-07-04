@@ -52,18 +52,18 @@ out<-try(applyStrategy(strategy=stratBBands , portfolios='bbands',parameters=lis
 
 # look at the order book
 #getOrderBook('bbands')
-end_t<-Sys.time()
-print("strat execution time:")
-print(end_t-start_t)
-
-start_t<-Sys.time()
-updatePortf(Portfolio='bbands',Dates=paste('::',as.Date(Sys.time()),sep=''))
-end_t<-Sys.time()
-print("updatePortf execution time:")
-print(end_t-start_t)
-
-chart.Posn(Portfolio='bbands',Symbol=stock.str)
-plot(add_BBands(on=1,sd=SD,n=N))
+# end_t<-Sys.time()
+# print("strat execution time:")
+# print(end_t-start_t)
+# 
+# start_t<-Sys.time()
+# updatePortf(Portfolio='bbands',Dates=paste('::',as.Date(Sys.time()),sep=''))
+# end_t<-Sys.time()
+# print("updatePortf execution time:")
+# print(end_t-start_t)
+# 
+# chart.Posn(Portfolio='bbands',Symbol=stock.str)
+# plot(add_BBands(on=1,sd=SD,n=N))
 
 ###############################################################################
 # R (http://r-project.org/) Quantitative Strategy Model Framework

@@ -162,14 +162,14 @@ updatePortf(p, Symbols='GBPUSD', ,Dates=paste('::',as.Date(Sys.time()),sep=''), 
 
 ###############################################################################
 
-chart.Posn(p, "GBPUSD")
-
-print(getOrderBook(p))
-
-txns <- getTxns(p, 'GBPUSD')
-txns
-##txns$Net 
-cat('Net profit:', sum(txns$Net.Txn.Realized.PL), '\n')
-
-tradeStats(p, 'GBPUSD')
+#chart.Posn(p, "GBPUSD")
+#
+#print(getOrderBook(p))
+#
+#txns <- getTxns(p, 'GBPUSD')
+#txns
+###txns$Net 
+#cat('Net profit:', sum(txns$Net.Txn.Realized.PL), '\n')
+#
+#tradeStats(p, 'GBPUSD')
 
