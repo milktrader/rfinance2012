@@ -16,12 +16,11 @@
 
 # The Qty of Stock A that it buys (sells) = MaxPos / lvls
 # The Qty of Stock B that is sells (buys) = MaxPos * Ratio / lvls  
-
-suppressWarnings(rm("order_book.pair1",pos=.strategy))
-suppressWarnings(rm("account.pairs", "portfolio.pair1", pos=.blotter))
-suppressWarnings(rm("initDate", "endDate", "startDate", "initEq", "SD", "N", "symb1", "symb2", 
-	"portfolio1.st", "account.st", "pairStrat", "out1"))
-
+# 
+# suppressWarnings(rm("order_book.pair1",pos=.strategy))
+# suppressWarnings(rm("account.pairs", "portfolio.pair1", pos=.blotter))
+# suppressWarnings(rm("initDate", "endDate", "startDate", "initEq", "SD", "N", "symb1", "symb2", "portfolio1.st", "account.st", "pairStrat", "out1"))
+# 
 require(quantstrat)
 initDate = '2009-01-01'		
 endDate = '2012-06-30'
@@ -179,12 +178,12 @@ updateAcct(account.st,Dates=paste(startDate,endDate,sep="::"))
 updateEndEq(account.st,Dates=paste(startDate,endDate,sep="::"))
 getEndEq(account.st,Sys.time())
 
-dev.new()
-chart.Posn(Portfolio=portfolio1.st,Symbol=symb1)
-dev.new()
-chart.Posn(Portfolio=portfolio1.st,Symbol=symb2)
-dev.new()
-chartSeries(Cl(get(symb1))/Cl(get(symb2)),TA="addBBands(n=N,sd=SD)")
+#dev.new()
+#chart.Posn(Portfolio=portfolio1.st,Symbol=symb1)
+#dev.new()
+#chart.Posn(Portfolio=portfolio1.st,Symbol=symb2)
+#dev.new()
+#chartSeries(Cl(get(symb1))/Cl(get(symb2)),TA="addBBands(n=N,sd=SD)")
 
 ret1 <- PortfReturns(account.st)
 ret1$total <- rowSums(ret1)
@@ -194,8 +193,8 @@ if("package:PerformanceAnalytics" %in% search() || require("PerformanceAnalytics
 #	getSymbols("SPY", from='1999-01-01')
 #	SPY.ret <- Return.calculate(SPY$SPY.Close)
 #	tmp <- merge(SPY.ret,ret1$total,all=FALSE)
-	dev.new()
-	charts.PerformanceSummary(ret1$total,geometric=FALSE,wealth.index=TRUE)
+#	dev.new()
+#	charts.PerformanceSummary(ret1$total,geometric=FALSE,wealth.index=TRUE)
 }
 
 

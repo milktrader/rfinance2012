@@ -36,7 +36,8 @@ currency(c('GBP', 'USD'))
 exchange_rate(c('GBPUSD'), tick_size=0.0001)
 
 #setSymbolLookup.FI('~/R.symbols/', 'GBPUSD')
-setSymbolLookup.FI('../sandbox/', 'GBPUSD')
+#setSymbolLookup.FI('../sandbox/', 'GBPUSD')
+setSymbolLookup.FI('~/clones/blotter/pkg/quantstrat/sandbox/', 'GBPUSD')
 
 ###
 
