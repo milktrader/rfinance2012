@@ -1,0 +1,9 @@
+For systems that get their data via a call to Yahoo, only the end data has been modified.
+
+It has been set to getSymbols(<unique symbol here>, to='2012-06-30')
+
+Two scripts get data from a sandbox and their date range has not been altered. 
+
+The first implementation is the context that 'Trade statistics should be consistent' and includes 6 tests per system.
+
+More to follow. This test directory uses the testthat R package.
