@@ -1,3 +1,3 @@
 suppressMessages(require(testthat))
 
-test_file('testthatairplane.r')
+test_file('tradeStatsAreConsistent.r')

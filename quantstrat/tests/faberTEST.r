@@ -46,10 +46,10 @@
 require(quantstrat)
 
 # Try to clean up in case the demo was run previously
-suppressWarnings(rm("account.faber","portfolio.faber",pos=.blotter))
-suppressWarnings(rm("ltaccount", "ltportfolio", "ClosePrice", "CurrentDate", "equity", 
-            "GSPC", "stratFaber", "initDate", "initEq", "Posn", "UnitSize", "verbose"))
-suppressWarnings(rm("order_book.faber",pos=.strategy))
+#suppressWarnings(rm("account.faber","portfolio.faber",pos=.blotter))
+#suppressWarnings(rm("ltaccount", "ltportfolio", "ClosePrice", "CurrentDate", "equity", 
+#            "GSPC", "stratFaber", "initDate", "initEq", "Posn", "UnitSize", "verbose"))
+#suppressWarnings(rm("order_book.faber",pos=.strategy))
 
 # Set initial values
 initDate='1997-12-31'
@@ -111,7 +111,7 @@ end_t<-Sys.time()
 ##print(getOrderBook('faber'))
 #
 #start_t<-Sys.time()
-#updatePortf(Portfolio='faber',Dates=paste('::',as.Date(Sys.time()),sep=''))
+updatePortf(Portfolio='faber',Dates=paste('::',as.Date(Sys.time()),sep=''))
 #end_t<-Sys.time()
 #print("trade blotter portfolio update:")
 #print(end_t-start_t)

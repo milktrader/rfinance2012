@@ -13,7 +13,9 @@ maxdraw1    = stats.one$maxDrawdown
 largwin1    = stats.one$Largest.Winner
 pfactor1    = stats.one$Profit.Factor
 
-suppressWarnings(rm(list=ls(all=TRUE))
+suppressWarnings(rm("order_book.bug",pos=.strategy))
+suppressWarnings(rm("account.colony","portfolio.bug",pos=.blotter))
+suppressWarnings(rm("sym","port","acct","initEq","initDate","fast",'slow','sd'))
 
 ################## bbands.R #########################
 
@@ -28,7 +30,9 @@ maxdraw2    = stats.two$maxDrawdown
 largwin2    = stats.two$Largest.Winner
 pfactor2    = stats.two$Profit.Factor
 
-suppressWarnings(rm(list=ls(all=TRUE))
+suppressWarnings(rm("order_book.bbands",pos=.strategy))
+suppressWarnings(rm("account.bbands","portfolio.bbands",pos=.blotter))
+suppressWarnings(rm("account.st","portfolio.st","stock.str","stratBBands","initDate","initEq",'start_t','end_t'))
 
 ################## faber.R #########################
 
@@ -43,7 +47,10 @@ maxdraw3    = last(stats.three$maxDrawdown)
 largwin3    = last(stats.three$Largest.Winner)
 pfactor3    = last(stats.three$Profit.Factor)
 
-suppressWarnings(rm(list=ls(all=TRUE))
+suppressWarnings(rm("account.faber","portfolio.faber",pos=.blotter))
+suppressWarnings(rm("ltaccount", "ltportfolio", "ClosePrice", "CurrentDate", "equity", 
+            "GSPC", "stratFaber", "initDate", "initEq", "Posn", "UnitSize", "verbose"))
+suppressWarnings(rm("order_book.faber",pos=.strategy))
 
 ################## faberMC.R #########################
 
@@ -58,22 +65,24 @@ maxdraw4    = last(stats.four$maxDrawdown)
 largwin4    = last(stats.four$Largest.Winner)
 pfactor4    = last(stats.four$Profit.Factor)
 
-suppressWarnings(rm(list=ls(all=TRUE))
+suppressWarnings(rm("account.faber","account.faberMC","portfolio.faber","portfolio.combMC", 
+                        "portfolio.GDAXI", "portfolio.GSPC", "portfolio.N225",pos=.blotter))
+suppressWarnings(rm("ltaccount","ltportfolio","ClosePrice","CurrentDate","equity","stratFaber","initDate","initEq","Posn","UnitSize","verbose"))
+suppressWarnings(rm("order_book.faber","order_book.combMC", "order_book.GDAXI", "order_book.GSPC", "order_book.N225", pos=.strategy))
 
 ################## luxor.R #########################
 
-source('luxorTEST.r')
+#source('luxorTEST.r')
+#
+#stats.five  = tradeStats(p)
+#
+#txns5       = stats.five$Num.Txns
+#trades5     = stats.five$Num.Trades
+#maxeq5      = stats.five$Max.Equity
+#maxdraw5    = stats.five$maxDrawdown
+#largwin5    = stats.five$Largest.Winner
+#pfactor5    = stats.five$Profit.Factor
 
-stats.five  = tradeStats(p)
-
-txns5       = stats.five$Num.Txns
-trades5     = stats.five$Num.Trades
-maxeq5      = stats.five$Max.Equity
-maxdraw5    = stats.five$maxDrawdown
-largwin5    = stats.five$Largest.Winner
-pfactor5    = stats.five$Profit.Factor
-
-suppressWarnings(rm(list=ls(all=TRUE))
 
 ################## maCros.R #########################
 
@@ -88,7 +97,9 @@ maxdraw6    = stats.six$maxDrawdown
 largwin6    = stats.six$Largest.Winner
 pfactor6    = stats.six$Profit.Factor
 
-suppressWarnings(rm(list=ls(all=TRUE))
+suppressWarnings(rm("order_book.macross",pos=.strategy))
+suppressWarnings(rm("account.macross","portfolio.macross",pos=.blotter))
+suppressWarnings(rm("account.st","portfolio.st","stock.str","stratMACROSS","initDate","initEq",'start_t','end_t'))
 
 ################## macd.R #########################
 
@@ -103,7 +114,9 @@ maxdraw7    = stats.seven$maxDrawdown
 largwin7    = stats.seven$Largest.Winner
 pfactor7    = stats.seven$Profit.Factor
 
-suppressWarnings(rm(list=ls(all=TRUE))
+suppressWarnings(rm("order_book.macd",pos=.strategy))
+suppressWarnings(rm("account.macd","portfolio.macd",pos=.blotter))
+suppressWarnings(rm("account.st","portfolio.st","stock.str","stratMACD","initDate","initEq",'start_t','end_t'))
 
 ################## pair_trade.R #########################
 
@@ -118,7 +131,9 @@ maxdraw8    = last(stats.eight$maxDrawdown)
 largwin8    = last(stats.eight$Largest.Winner)
 pfactor8    = last(stats.eight$Profit.Factor)
 
-suppressWarnings(rm(list=ls(all=TRUE))
+suppressWarnings(rm("order_book.pair1",pos=.strategy))
+suppressWarnings(rm("account.pairs", "portfolio.pair1", pos=.blotter))
+suppressWarnings(rm("initDate", "endDate", "startDate", "initEq", "SD", "N", "symb1", "symb2", "portfolio1.st", "account.st", "pairStrat", "out1"))
 
 ################## rocema.R #########################
 #
@@ -133,7 +148,6 @@ suppressWarnings(rm(list=ls(all=TRUE))
 #largwin9    = stats.nine$Largest.Winner
 #pfactor9    = stats.nine$Profit.Factor
 #
-#suppressWarnings(rm(list=ls(all=TRUE))
 #
 ################### rsi.R#########################
 #
@@ -148,7 +162,6 @@ suppressWarnings(rm(list=ls(all=TRUE))
 #largwin10    = stats.ten$Largest.Winner
 #pfactor10    = stats.ten$Profit.Factor
 #
-#suppressWarnings(rm(list=ls(all=TRUE))
 #
 ######################## RUN TEST SUITE #######################
 
@@ -160,7 +173,7 @@ test_that('Number of transactions is consistent', {
   expect_that(txns2, equals(151))
   expect_that(txns3, equals(10))
   expect_that(txns4, equals(15))
-  expect_that(txns5, equals(15))
+#  expect_that(txns5, equals(15))
   expect_that(txns6, equals(11))
   expect_that(txns7, equals(27))
   expect_that(txns8, equals(92))
@@ -174,7 +187,7 @@ test_that('Number of the number of trades is consistent', {
   expect_that(trades2, equals(68))
   expect_that(trades3, equals(5))
   expect_that(trades4, equals(15))
-  expect_that(trades5, equals(7))
+#  expect_that(trades5, equals(7))
   expect_that(trades6, equals(5))
   expect_that(trades7, equals(13))
   expect_that(trades8, equals(31))
@@ -188,7 +201,7 @@ test_that('Max equity is consistent', {
   expect_that(maxeq2, equals(8964))
   expect_that(maxeq3, equals(6021980))
   expect_that(maxeq4, equals(21705))
-  expect_that(maxeq5, equals(730))
+#  expect_that(maxeq5, equals(730))
   expect_that(maxeq6, equals(54739))
   expect_that(maxeq7, equals(48918.75))
   expect_that(maxeq8, equals(3877.741))
@@ -202,7 +215,7 @@ test_that('Max drawdown is consistent', {
   expect_that(maxdraw2, equals(-5269))
   expect_that(maxdraw3, equals(-2321310))
   expect_that(maxdraw4, equals(-6800))
-  expect_that(maxdraw5, equals(-1340))
+#  expect_that(maxdraw5, equals(-1340))
   expect_that(maxdraw6, equals(-13434))
   expect_that(maxdraw7, equals(-8374))
   expect_that(maxdraw8, equals(-30979.74))
@@ -216,7 +229,7 @@ test_that('Largest winner is consistent', {
   expect_that(largwin2, equals(1681))
   expect_that(largwin3, equals(2891500))
   expect_that(largwin4, equals(10835))
-  expect_that(largwin5, equals(340))
+#  expect_that(largwin5, equals(340))
   expect_that(largwin6, equals(5018))
   expect_that(largwin7, equals(16265))
   expect_that(largwin8, equals(7185.448))
@@ -230,7 +243,7 @@ test_that('Profit Factor is consistent', {
   expect_that(pfactor2, equals(1.935963))
   expect_that(pfactor3, equals(4.904525))
   expect_that(pfactor4, equals(4.9181818))
-  expect_that(pfactor5, equals(0.9404762))
+#  expect_that(pfactor5, equals(0.9404762))
   expect_that(pfactor6, equals(1.561851))
   expect_that(pfactor7, equals(8.801109))
   expect_that(pfactor8, equals(0.6433525))

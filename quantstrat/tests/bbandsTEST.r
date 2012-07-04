@@ -1,7 +1,7 @@
 require(quantstrat)
-suppressWarnings(rm("order_book.bbands",pos=.strategy))
-suppressWarnings(rm("account.bbands","portfolio.bbands",pos=.blotter))
-suppressWarnings(rm("account.st","portfolio.st","stock.str","stratBBands","initDate","initEq",'start_t','end_t'))
+#suppressWarnings(rm("order_book.bbands",pos=.strategy))
+#suppressWarnings(rm("account.bbands","portfolio.bbands",pos=.blotter))
+#suppressWarnings(rm("account.st","portfolio.st","stock.str","stratBBands","initDate","initEq",'start_t','end_t'))
 
 # some things to set up here
 stock.str='IBM' # what are we trying it on
@@ -51,16 +51,16 @@ start_t<-Sys.time()
 out<-try(applyStrategy(strategy=stratBBands , portfolios='bbands',parameters=list(sd=SD,n=N)) )
 
 # look at the order book
-#getOrderBook('bbands')
-# end_t<-Sys.time()
-# print("strat execution time:")
-# print(end_t-start_t)
+getOrderBook('bbands')
+ end_t<-Sys.time()
+ print("strat execution time:")
+ print(end_t-start_t)
 # 
-# start_t<-Sys.time()
-# updatePortf(Portfolio='bbands',Dates=paste('::',as.Date(Sys.time()),sep=''))
-# end_t<-Sys.time()
-# print("updatePortf execution time:")
-# print(end_t-start_t)
+ start_t<-Sys.time()
+ updatePortf(Portfolio='bbands',Dates=paste('::',as.Date(Sys.time()),sep=''))
+ end_t<-Sys.time()
+ print("updatePortf execution time:")
+ print(end_t-start_t)
 # 
 # chart.Posn(Portfolio='bbands',Symbol=stock.str)
 # plot(add_BBands(on=1,sd=SD,n=N))
