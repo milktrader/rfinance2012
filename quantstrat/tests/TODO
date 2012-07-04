@@ -1,0 +1,25 @@
+Testing TODO:
+
+assigned to: milktrader
+
+1. svnversion bbands.R to determine under what revision script was last modified ..........INCOMPLETE
+2. svn up -r<that revision number> ........................................................INCOMPLETE
+3. Update blotter/pkg to that revision (choosing tc) ......................................INCOMPLETE
+4. Run bbands.R script in R console and determine values to pass to tests .................INCOMPLETE
+5. Write tests for those values ...........................................................INCOMPLETE
+6. Save the demo script as bbands_rev1010_test.r (e.g.) ...................................INCOMPLETE
+7. Remove comments, calls to charts and other output, prettify and add call to tradeStats..INCOMPLETE
+8. Ensure tests are still passing .........................................................INCOMPLETE
+9. Modify symbol call(s) to load data('ttrc') <set.seed for multiple symbols>..............INCOMPLETE
+10. Determine new 'test' values to pass to tests ..........................................INCOMPLETE
+11. Write test for those values............................................................INCOMPLETE
+12. Get passing tests .....................................................................INCOMPLETE
+13. Complete the process for bee.R ........................................................INCOMPLETE
+14. Complete the process for faber.R ......................................................INCOMPLETE
+15. Complete the process for faberMC.R ....................................................INCOMPLETE
+16. Complete the process for luxor.R ......................................................INCOMPLETE
+17. Complete the process for macd.R .......................................................INCOMPLETE
+18. Complete the process for maCross.R ....................................................INCOMPLETE
+19. Complete the process for pair_trade.R .................................................INCOMPLETE
+20. Complete the process for rocema.R .....................................................INCOMPLETE
+21. Complete the process for rsi.R ........................................................INCOMPLETE
