@@ -114,6 +114,17 @@ suppressWarnings(rm("order_book.pair1",pos=.strategy))
 suppressWarnings(rm("account.pairs", "portfolio.pair1", pos=.blotter))
 suppressWarnings(rm("initDate", "endDate", "startDate", "initEq", "SD", "N", "symb1", "symb2", "portfolio1.st", "account.st", "pairStrat", "out1"))
 
+################### rsi.R#########################
+
+source('rsiTEST.r')
+
+stats.eight  = tradeStats(port.st)
+
+txns8       = last(stats.eight$Num.Txns)
+trades8     = last(stats.eight$Num.Trades)
+maxeq8      = last(stats.eight$Max.Equity)
+maxdraw8    = last(stats.eight$maxDrawdown)
+largwin8    = last(stats.eight$Largest.Winner)
 
 ######################## RUN TEST SUITE #######################
 
@@ -129,6 +140,7 @@ test_that('Number of transactions is consistent', {
   expect_that(txns5, equals(27))
   expect_that(txns6, equals(11))
   expect_that(txns7, equals(92))
+  expect_that(txns8, equals(603))
 })
 
 test_that('Number of the number of trades is consistent', {
@@ -140,6 +152,7 @@ test_that('Number of the number of trades is consistent', {
   expect_that(trades5, equals(13))
   expect_that(trades6, equals(5))
   expect_that(trades7, equals(31))
+  expect_that(trades8, equals(384))
 })
 
 test_that('Max equity is consistent', {
@@ -150,7 +163,8 @@ test_that('Max equity is consistent', {
   expect_that(maxeq4, equals(6021980))
   expect_that(maxeq5, equals(48918.75))
   expect_that(maxeq6, equals(54739))
-  expect_that(maxeq7, equals(round(3877.741, digits=2)))
+#  expect_that(maxeq7, equals(round(3877.741, digits=2)))
+  expect_that(maxeq8, equals(36880))
 })
 
 test_that('Max drawdown is consistent', {
@@ -161,7 +175,8 @@ test_that('Max drawdown is consistent', {
   expect_that(maxdraw4, equals(-2321310))
   expect_that(maxdraw5, equals(-8374))
   expect_that(maxdraw6, equals(-13434))
-  expect_that(maxdraw7, equals(round(-30979.74, digits=2)))
+  expect_that(maxdraw7, equals(-30979.74))
+  expect_that(maxdraw8, equals(-72041800))
 })
 
 test_that('Largest winner is consistent', {
@@ -172,7 +187,8 @@ test_that('Largest winner is consistent', {
   expect_that(largwin4, equals(2891500))
   expect_that(largwin5, equals(16265))
   expect_that(largwin6, equals(5018))
-  expect_that(largwin7, equals(7185.448))
+#  expect_that(largwin7, equals(7185.448))
+  expect_that(largwin8, equals(29892.61))
 })
 
 
