@@ -80,7 +80,7 @@ initPortf('faber', symbols=symbols, initDate=initDate)
 initAcct('faber', portfolios='faber', initDate=initDate, initEq=100000)
 initOrders(portfolio='faber', initDate=initDate)
 
-print("setup completed")
+#print("setup completed")
 
 # Initialize a strategy object
 stratFaber <- strategy("faber")

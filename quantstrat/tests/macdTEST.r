@@ -11,9 +11,9 @@
 
 
 require(quantstrat)
-suppressWarnings(rm("order_book.macd",pos=.strategy))
-suppressWarnings(rm("account.macd","portfolio.macd",pos=.blotter))
-suppressWarnings(rm("account.st","portfolio.st","stock.str","stratMACD","initDate","initEq",'start_t','end_t'))
+#suppressWarnings(rm("order_book.macd",pos=.strategy))
+#suppressWarnings(rm("account.macd","portfolio.macd",pos=.blotter))
+#suppressWarnings(rm("account.st","portfolio.st","stock.str","stratMACD","initDate","initEq",'start_t','end_t'))
 
 stock.str='AAPL' # what are we trying it on
 
@@ -74,7 +74,7 @@ getSymbols(stock.str,from=initDate, to='2012-06-30')
 start_t<-Sys.time()
 out<-try(applyStrategy(strat.st , portfolios=portfolio.st,parameters=list(nFast=fastMA, nSlow=slowMA, nSig=signalMA,maType=maType)))
 end_t<-Sys.time()
-print(end_t-start_t)
+#print(end_t-start_t)
 
 start_t<-Sys.time()
 updatePortf(Portfolio=portfolio.st,Dates=paste('::',as.Date(Sys.time()),sep=''))

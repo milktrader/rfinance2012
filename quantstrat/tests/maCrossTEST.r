@@ -5,9 +5,9 @@
 #########################################################################################################################################################################
 
 require(quantstrat)
-suppressWarnings(rm("order_book.macross",pos=.strategy))
-suppressWarnings(rm("account.macross","portfolio.macross",pos=.blotter))
-suppressWarnings(rm("account.st","portfolio.st","stock.str","stratMACROSS","initDate","initEq",'start_t','end_t'))
+#suppressWarnings(rm("order_book.macross",pos=.strategy))
+#suppressWarnings(rm("account.macross","portfolio.macross",pos=.blotter))
+#suppressWarnings(rm("account.st","portfolio.st","stock.str","stratMACROSS","initDate","initEq",'start_t','end_t'))
 stock.str='AAPL' # what are we trying it on
 currency('USD')
 stock(stock.str,currency='USD',multiplier=1)
@@ -42,13 +42,13 @@ for(i in stock.str)
 start_t<-Sys.time()
 out<-try(applyStrategy(strategy=stratMACROSS , portfolios=portfolio.st))
 end_t<-Sys.time()
-print(end_t-start_t)
+#print(end_t-start_t)
 
 start_t<-Sys.time()
 updatePortf(Portfolio='macross',Dates=paste('::',as.Date(Sys.time()),sep=''))
 end_t<-Sys.time()
-print("trade blotter portfolio update:")
-print(end_t-start_t)
+#print("trade blotter portfolio update:")
+#print(end_t-start_t)
 
 #chart.Posn(Portfolio='macross',Symbol=stock.str)
 #add_SMA(n=50 , on=1,col='blue')

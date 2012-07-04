@@ -46,10 +46,10 @@
 require(quantstrat)
 
 # Try to clean up in case the demo was run previously
-suppressWarnings(rm("account.faber","account.faberMC","portfolio.faber","portfolio.combMC", 
-                        "portfolio.GDAXI", "portfolio.GSPC", "portfolio.N225",pos=.blotter))
-suppressWarnings(rm("ltaccount","ltportfolio","ClosePrice","CurrentDate","equity","stratFaber","initDate","initEq","Posn","UnitSize","verbose"))
-suppressWarnings(rm("order_book.faber","order_book.combMC", "order_book.GDAXI", "order_book.GSPC", "order_book.N225", pos=.strategy))
+#suppressWarnings(rm("account.faber","account.faberMC","portfolio.faber","portfolio.combMC", 
+#                        "portfolio.GDAXI", "portfolio.GSPC", "portfolio.N225",pos=.blotter))
+#suppressWarnings(rm("ltaccount","ltportfolio","ClosePrice","CurrentDate","equity","stratFaber","initDate","initEq","Posn","UnitSize","verbose"))
+#suppressWarnings(rm("order_book.faber","order_book.combMC", "order_book.GDAXI", "order_book.GSPC", "order_book.N225", pos=.strategy))
 
 # Set initial values
 initDate='2000-01-01'
@@ -117,8 +117,8 @@ stratFaber <- add.rule(stratFaber, name='ruleSignal', arguments = list(sigcol="C
 start_t<-Sys.time()
 out<-try(applyStrategy(strategy=stratFaber , portfolios=symbols))
 end_t<-Sys.time()
-print("Strategy Loop:")
-print(end_t-start_t)
+#print("Strategy Loop:")
+#print(end_t-start_t)
 
 # look at the order book
 #print(getOrderBook('faber'))
@@ -128,8 +128,8 @@ for(symbol in symbols) {
 	updatePortf(Portfolio=symbol,Dates=paste('::',as.Date(Sys.time()),sep=''))
 }
 end_t<-Sys.time()
-print("trade blotter portfolio update:")
-print(end_t-start_t)
+#print("trade blotter portfolio update:")
+#print(end_t-start_t)
 
 #and a combined portfolio
 initPortf('combMC', symbols=symbols, initDate=initDate, currency="USD")
