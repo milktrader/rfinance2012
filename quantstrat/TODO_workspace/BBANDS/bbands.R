@@ -46,7 +46,7 @@ stratBBands <- add.rule(stratBBands,name='ruleSignal', arguments = list(sigcol="
 
 #TODO add thresholds and stop-entry and stop-exit handling to test
 
-getSymbols(stock.str,from=initDate,index.class=c('POSIXt','POSIXct'))
+getSymbols(stock.str,from=initDate, to='2012-07-05', index.class=c('POSIXt','POSIXct'))
 start_t<-Sys.time()
 out<-try(applyStrategy(strategy=stratBBands , portfolios='bbands',parameters=list(sd=SD,n=N)) )
 

@@ -8,13 +8,13 @@ assigned to: milktrader
 4. Run bbands.R script in R console and determine values to pass to tests .................COMPLETE
 5. Write tests for those values ...........................................................COMPLETE
 6. Save the demo script as bbands_rev1097_refactored_for_testing.r (e.g.) .................COMPLETE
-7. Remove comments, calls to charts and other output, prettify and add call to tradeStats..INCOMPLETE
-8. Ensure tests are still passing .........................................................INCOMPLETE
-9. Modify symbol call(s) to load data('ttrc') <set.seed for multiple symbols>..............INCOMPLETE
-10. Rename file bbands_version_for_tests.r ................................................INCOMPLETE
-11. Determine new 'test' values to pass to tests ..........................................INCOMPLETE
-12. Write test for those values............................................................INCOMPLETE
-13. Get passing tests .....................................................................INCOMPLETE
+7. Remove comments, calls to charts and other output, prettify and add call to tradeStats..COMPLETE
+8. Ensure tests are still passing .........................................................COMPLETE
+9. Modify symbol call(s) to load data('ttrc') <set.seed for multiple symbols>..............COMPLETE
+10. Rename file bbands_version_for_tests.r ................................................COMPLETE
+11. Determine new 'test' values to pass to tests ..........................................COMPLETE
+12. Write test for those values............................................................COMPLETE
+13. Get passing tests .....................................................................COMPLETE
 14. Complete the process for bee.R ........................................................INCOMPLETE
 15. Complete the process for faber.R ......................................................INCOMPLETE
 16. Complete the process for faberMC.R ....................................................INCOMPLETE
