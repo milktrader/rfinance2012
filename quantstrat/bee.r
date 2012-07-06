@@ -1,6 +1,6 @@
 #
 # Bumblebee trading system
-# copyright 2009-2012, Algorithm Alpha, LLC
+# copyright (c) 2009-2012, Algorithm Alpha, LLC
 # Licensed GPL-2
 #
 ############################# DEFINE VARIABLES ##############################
@@ -9,26 +9,26 @@ sym           = 'GLD'
 port          = 'bug'
 acct          = 'colony'
 initEq        = 100000
-initDate      = '1950-01-01'
+initDate      = '1999-12-31'
 fast          = 10
 slow          = 30
 sd            = 0.5
 
-############################### GET DATA ####################################
+############################# GET DATA ######################################
 
 suppressMessages(require(quantstrat))
-getSymbols(sym, index.class=c("POSIXt","POSIXct"))
+getSymbols(sym, from='2000-01-01', index.class=c("POSIXt","POSIXct"))
 
-############################ INITIALIZE #####################################
+############################# INITIALIZE ####################################
 
 currency('USD')
 stock(sym ,currency='USD', multiplier=1)
 initPortf(port, sym, initDate=initDate)
 initAcct(acct, port, initEq=initEq, initDate=initDate)
 initOrders(port, initDate=initDate )
-bee     = strategy(port)
+bee = strategy(port)
 
-############################### MAX POSITION LOGIC ########################
+############################# MAX POSITION LOGIC ############################
 
 addPosLimit(
             portfolio=port,
@@ -37,7 +37,7 @@ addPosLimit(
             maxpos=100)
 
 
-############################ INDICATORS ####################################
+############################# INDICATORS ####################################
 
 bee <- add.indicator( 
                      strategy  = bee, 
@@ -53,7 +53,7 @@ bee <- add.indicator(
                                       n=fast),
                      label     = 'fast' )
 
-########################### SIGNALS ######################################
+############################# SIGNALS #######################################
 
 bee <- add.signal(
                   strategy  = bee,
@@ -69,7 +69,7 @@ bee <- add.signal(
                                    relationship='gt'),
                   label     = 'fast.gt.up')
 
-########################## RULES #########################################
+############################# RULES #########################################
 
 bee <- add.rule(
                 strategy  = bee,
@@ -118,18 +118,26 @@ bee <- add.rule(
                 type      = 'exit',
                 label     = 'ExitSHORT')
 
-#################################### APPLY STRATEGY #######################
+############################# APPLY STRATEGY ################################
 
 applyStrategy(bee, port, prefer='Open', verbose=FALSE)
 
-#################################### UPDATE ###############################
+############################# UPDATE ########################################
 
 updatePortf(port, sym, Date=paste('::',as.Date(Sys.time()),sep=''))
 updateAcct(acct)
 
 ########################### USEFUL CONTAINERS #############################
 
+invisible(mktdata)
+stratStats   = tradeStats(port)
+stratReturns = PortfReturns(acct)
 
-straturn  = PortfReturns(acct)
-stratstat = tradeStats(port)
+############################# EXAMPLE STATS #################################
+
+cat('Profit Factor for bumblebee is: ', stratStats$Profit.Factor, '\n')
+
+suppressMessages(require(PerformanceAnalytics))
+
+cat('Sortino Ratio for bumblebee is: ', SortinoRatio(stratReturns), '\n')
 
