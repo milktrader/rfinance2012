@@ -190,8 +190,9 @@ updatePortf("stocky")
 ############################# Portfolio Return Characterics ################################
 #get portfolio data
 portRet <- PortfReturns("stocky")
-portRet$Total <- rowSums(portRet, na.rm=TRUE)
-charts.PerformanceSummary(portRet$Total)
+#portRet$Total <- rowSums(portRet, na.rm=TRUE)
+#charts.PerformanceSummary(portRet$Total)
+charts.PerformanceSummary(portRet)
 tradeStats("stocky")[,c("Symbol","Num.Trades","Net.Trading.PL","maxDrawdown")]
 #change SPY to your stock choice
 chart.Posn("stocky","SPY")
