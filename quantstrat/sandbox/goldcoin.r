@@ -2,8 +2,8 @@ require(quantmod)
  
 getSymbols("GLD")
  
-for(i in seq(5, 15, 5))
-  for(j in seq(50, 80, 15))
+#for(i in seq(5, 15, 5))
+#  for(j in seq(50, 80, 15))
  
 {
     GLD$fast     <- SMA(Cl(GLD), n=i)     
