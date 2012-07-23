@@ -1,21 +1,3 @@
-############################# LOOP ##########################################
-
-for (i in seq(2,22,2)) 
-{  
-  for (j in seq(45,55,10))
-  { 
- 
-#i = 10  
-#j = 35
-############################ VARIABLES ######################
-
-FAST = i
-SLOW = j
-
-############################## ORIGINAL SCRIPT ##############
-
-
-
 #!/usr/bin/Rscript --vanilla
 #
 # Jan Humme (@opentrades) - June 2012
@@ -26,6 +8,9 @@ SLOW = j
 #
 # Paragraph 3.2: luxor without any optimizations, but with $30 tnx costs + slippage
 
+.fast = 1
+.slow = 44
+
 .qty=100000
 .th=0.0005
 .txn=-30
@@ -33,8 +18,8 @@ SLOW = j
 
 initDate = '2002-10-21'
 .from='2002-10-21'
-.to='2002-10-31'
-#.to='2008-07-04'
+.to='2008-07-04'
+#.to='2003-12-31'
 
 ####
 
@@ -47,14 +32,14 @@ options(width = 240)
 
 ###
 
-suppressMessages(require(quantstrat))
+require(quantstrat)
 
 currency(c('GBP', 'USD'))
 
 exchange_rate(c('GBPUSD'), tick_size=0.0001)
 
-#setSymbolLookup.FI('~/R.symbols/', 'GBPUSD')
-setSymbolLookup.FI('~/Desktop', 'GBPUSD')
+setSymbolLookup.FI('~/R.symbols/', 'GBPUSD')
+#setSymbolLookup.FI('../sandbox/', 'GBPUSD')
 
 ###
 
@@ -80,7 +65,7 @@ strategy(s, store=TRUE)
 add.indicator(s, name = "SMA",
 	arguments = list(
 		x = quote(Cl(mktdata)),
-		n = FAST
+		n = .fast
 	),
 	label="nFast"
 )
@@ -88,7 +73,7 @@ add.indicator(s, name = "SMA",
 add.indicator(s, name="SMA",
 	arguments = list(
 		x = quote(Cl(mktdata)),
-		n = SLOW
+		n = .slow
 	),
 	label="nSlow"
 )
@@ -172,32 +157,21 @@ add.rule(s, 'ruleSignal',
 
 ###############################################################################
 
-#applyStrategy(s, p, verbose = FALSE)
-applyStrategy(s, p, prefer='Open', verbose = FALSE)
+applyStrategy(s, p, verbose = FALSE)
+#applyStrategy(s, p, prefer='Open', verbose = FALSE)
 
 updatePortf(p, Symbols='GBPUSD', ,Dates=paste('::',as.Date(Sys.time()),sep=''))
 
 ###############################################################################
 
-#chart.Posn(p, "GBPUSD")
+chart.Posn(p, "GBPUSD")
 
-#print(getOrderBook(p))
+print(getOrderBook(p))
 
-#txns <- getTxns(p, 'GBPUSD')
-#txns
+txns <- getTxns(p, 'GBPUSD')
+txns
 ##txns$Net 
-#cat('Net profit:', sum(txns$Net.Txn.Realized.PL), '\n')
+cat('Net profit:', sum(txns$Net.Txn.Realized.PL), '\n')
 
-stratStats = tradeStats(p, 'GBPUSD')
+tradeStats(p, 'GBPUSD')
 
-cat('Number of transactions fast ', i, 'and slow ',j, 'is: ', stratStats$Num.Txns, '\n')
-
-
-suppressWarnings(rm("order_book.forex",pos=.strategy))
-suppressWarnings(rm("account.IB1","portfolio.forex",pos=.blotter))
-suppressWarnings(rm("GBPUSD","p","a","initEq","initDate", ".qty", ".th", ".txn"))
-
-
-
-  }
-}

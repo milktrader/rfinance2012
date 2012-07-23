@@ -3,23 +3,15 @@
 # copyright (c) 2009-2012, Algorithm Alpha, LLC
 # Licensed GPL-2
 #
-############################# LOOP ##########################################
-
-for (i in seq(7,21,7)) 
-{  
-  for (j in seq(30,50,10))
-  { 
-############################# SET TIMEZONE  ##############################
-Sys.setenv(TZ="UTC")
 ############################# DEFINE VARIABLES ##############################
 
-sym           = 'GLD'
+sym           = 'TLT'
 port          = 'bug'
 acct          = 'colony'
 initEq        = 100000
 initDate      = '1999-12-31'
-fast          = i 
-slow          = j 
+fast          = 10
+slow          = 30
 sd            = 0.5
 
 ############################# GET DATA ######################################
@@ -135,19 +127,29 @@ applyStrategy(bee, port, prefer='Open', verbose=FALSE)
 updatePortf(port, sym, Date=paste('::',as.Date(Sys.time()),sep=''))
 updateAcct(acct)
 
-########################### USEFUL CONTAINERS ###############################
+########################### USEFUL CONTAINERS #############################
 
+invisible(mktdata)
 stratStats   = tradeStats(port)
 stratReturns = PortfReturns(acct)
 
-############################# STAT OF INTEREST ##############################
+############################# EXAMPLE STATS #################################
 
-cat('Profit Factor for fast ==', i, 'and slow ==',j, 'is: ', stratStats$Profit.Factor, '\n')
+cat('Profit Factor for bumblebee is: ', stratStats$Profit.Factor, '\n')
 
-############################# CLEAN UP ######################################
+suppressMessages(require(PerformanceAnalytics))
+
+cat('Sortino Ratio for bumblebee is: ', SortinoRatio(stratReturns), '\n')
+
+############################# PLOT ##########################################
+
+require(milk)
+around_zero(stratReturns, title=sym)
+system('open Rplots.pdf')
+
+############################# PURGE #########################################
 
 suppressWarnings(rm("order_book.bug",pos=.strategy))
 suppressWarnings(rm("account.colony","portfolio.bug",pos=.blotter))
 suppressWarnings(rm("sym","port","acct","initEq","initDate","fast",'slow','sd'))
- }
-}
+
